@@ -46,12 +46,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (loginId: string, password: string, doNotRemember: boolean = false) => {
     await ensureCsrfToken();
-    await apiClient.post('/api/v1/auth/login', {
+    const response = await apiClient.post('/api/v1/auth/login', {
       login: loginId,
       password,
       do_not_remember: doNotRemember,
     });
-    await refreshUser();
+    if (response.data?.data) {
+      setUser(response.data.data);
+    } else {
+      await refreshUser();
+    }
   };
 
   const logout = async () => {
