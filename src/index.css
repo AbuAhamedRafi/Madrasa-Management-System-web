@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-primary: #137C73;
+  --color-brand-primary-hover: #0F635C;
+  --color-brand-navy: #10364A;
+  --color-brand-navy-dark: #0A2432;
+  --color-brand-canvas: #F4F7FB;
+  --font-bangla: 'Noto Sans Bengali', 'Inter', system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-bangla);
+  background-color: var(--color-brand-canvas);
+  color: #1E293B;
+  -webkit-font-smoothing: antialiased;
+}
