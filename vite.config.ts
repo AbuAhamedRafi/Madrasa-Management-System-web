@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
+const backendTarget = process.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000';
+
 export default defineConfig({
   plugins: [
     react(),
@@ -16,19 +18,11 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: process.env.VITE_BACKEND_INTERNAL_URL || 'http://host.docker.internal:8000',
+        target: backendTarget,
         changeOrigin: true,
       },
       '/sanctum': {
-        target: process.env.VITE_BACKEND_INTERNAL_URL || 'http://host.docker.internal:8000',
-        changeOrigin: true,
-      },
-      '/login': {
-        target: process.env.VITE_BACKEND_INTERNAL_URL || 'http://host.docker.internal:8000',
-        changeOrigin: true,
-      },
-      '/logout': {
-        target: process.env.VITE_BACKEND_INTERNAL_URL || 'http://host.docker.internal:8000',
+        target: backendTarget,
         changeOrigin: true,
       },
     },

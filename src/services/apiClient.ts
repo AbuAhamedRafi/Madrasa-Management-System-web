@@ -23,8 +23,14 @@ export async function ensureCsrfToken(): Promise<void> {
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401 && !window.location.pathname.startsWith('/login') && !window.location.pathname.startsWith('/activate')) {
-      window.location.href = '/login';
+    const path = window.location.pathname;
+    if (
+      error.response?.status === 401 &&
+      path !== '/' &&
+      !path.startsWith('/login') &&
+      !path.startsWith('/activate')
+    ) {
+      window.location.href = '/';
     }
     return Promise.reject(error);
   }

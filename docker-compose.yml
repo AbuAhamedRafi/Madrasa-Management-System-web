@@ -11,7 +11,7 @@ services:
       - .:/app
       - /app/node_modules
     environment:
-      - VITE_API_URL=http://localhost:8000
+      - VITE_BACKEND_URL=http://host.docker.internal:8000
     networks:
       - mms_frontend_network
 

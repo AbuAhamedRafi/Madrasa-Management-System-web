@@ -46,7 +46,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (loginId: string, password: string, doNotRemember: boolean = false) => {
     await ensureCsrfToken();
-    await apiClient.post('/login', {
+    await apiClient.post('/api/v1/auth/login', {
       login: loginId,
       password,
       do_not_remember: doNotRemember,
@@ -56,7 +56,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = async () => {
     try {
-      await apiClient.post('/logout');
+      await apiClient.post('/api/v1/auth/logout');
     } finally {
       setUser(null);
       window.location.href = '/login';
