@@ -140,3 +140,4 @@ export const CreatePermissionModal: React.FC<Props> = ({ onClose, onSubmit, isSu
     </div>
   );
 };
+
