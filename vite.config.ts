@@ -11,21 +11,24 @@ export default defineConfig({
   server: {
     port: 5173,
     host: '0.0.0.0',
+    watch: {
+      usePolling: true,
+    },
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: process.env.VITE_BACKEND_INTERNAL_URL || 'http://host.docker.internal:8000',
         changeOrigin: true,
       },
       '/sanctum': {
-        target: 'http://localhost:8000',
+        target: process.env.VITE_BACKEND_INTERNAL_URL || 'http://host.docker.internal:8000',
         changeOrigin: true,
       },
       '/login': {
-        target: 'http://localhost:8000',
+        target: process.env.VITE_BACKEND_INTERNAL_URL || 'http://host.docker.internal:8000',
         changeOrigin: true,
       },
       '/logout': {
-        target: 'http://localhost:8000',
+        target: process.env.VITE_BACKEND_INTERNAL_URL || 'http://host.docker.internal:8000',
         changeOrigin: true,
       },
     },
