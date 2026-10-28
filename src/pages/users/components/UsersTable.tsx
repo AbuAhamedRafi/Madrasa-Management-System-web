@@ -120,3 +120,4 @@ export const UsersTable: React.FC<TableProps> = ({ users, meta, onPageChange }) 
     </div>
   );
 };
+

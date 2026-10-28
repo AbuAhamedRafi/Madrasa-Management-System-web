@@ -38,3 +38,4 @@ export const BrandPanel: React.FC = () => {
     </div>
   );
 };
+

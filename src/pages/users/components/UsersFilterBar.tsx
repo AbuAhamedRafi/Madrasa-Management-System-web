@@ -67,3 +67,4 @@ export const UsersFilterBar: React.FC<FilterProps> = ({
     </div>
   );
 };
+

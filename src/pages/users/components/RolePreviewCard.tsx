@@ -62,3 +62,4 @@ export const RolePreviewCard: React.FC<RolePreviewProps> = ({ role }) => {
     </div>
   );
 };
+

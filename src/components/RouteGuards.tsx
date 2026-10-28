@@ -41,3 +41,4 @@ export const PublicRoute: React.FC = () => {
 
   return <Outlet />;
 };
+

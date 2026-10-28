@@ -106,3 +106,4 @@ export const UserProfileEditCard: React.FC<Props> = ({ user, onSubmit, isSubmitt
     </div>
   );
 };
+

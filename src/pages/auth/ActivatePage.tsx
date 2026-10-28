@@ -110,3 +110,4 @@ export const ActivatePage: React.FC = () => {
     </div>
   );
 };
+
