@@ -16,6 +16,10 @@ export const router = createBrowserRouter([
     element: <PublicRoute />,
     children: [
       {
+        path: '/',
+        element: <LoginPage />,
+      },
+      {
         path: '/login',
         element: <LoginPage />,
       },
@@ -78,6 +82,6 @@ export const router = createBrowserRouter([
   // Catch-all redirect
   {
     path: '*',
-    element: <Navigate to="/login" replace />,
+    element: <Navigate to="/" replace />,
   },
 ]);
