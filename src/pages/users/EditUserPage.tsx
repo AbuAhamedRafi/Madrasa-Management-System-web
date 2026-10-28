@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { apiClient } from '../../services/apiClient';
 import { UserProfileEditCard } from './components/edit/UserProfileEditCard';
 import { UserRoleEditCard } from './components/edit/UserRoleEditCard';
+import { UserPermissionEditCard } from './components/edit/UserPermissionEditCard';
 import { UserStatusCard } from './components/edit/UserStatusCard';
 import { ReissueModal } from './components/edit/ReissueModal';
 import { ArrowLeft, CheckCircle2, AlertCircle } from 'lucide-react';
@@ -61,6 +62,22 @@ export const EditUserPage: React.FC = () => {
     },
     onError: (err: any) => {
       showNotice('error', err.response?.data?.message || 'Failed to update roles.');
+    },
+  });
+
+  // Mutation: Update permissions
+  const permissionsMutation = useMutation({
+    mutationFn: async (permissions: string[]) => {
+      const res = await apiClient.put(`/api/v1/admin/users/${id}/permissions`, { permissions });
+      return res.data.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-user', id] });
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] });
+      showNotice('success', 'অনুমতি ফ্ল্যাগ সফলভাবে আপডেট হয়েছে');
+    },
+    onError: (err: any) => {
+      showNotice('error', err.response?.data?.message || 'Failed to update user permissions.');
     },
   });
 
@@ -173,6 +190,15 @@ export const EditUserPage: React.FC = () => {
           await rolesMutation.mutateAsync(roles);
         }}
         isSubmitting={rolesMutation.isPending}
+      />
+
+      {/* Modular Section 2.5: Granular Functional Permissions Customization */}
+      <UserPermissionEditCard
+        currentPermissions={user.permissions || []}
+        onSubmit={async (perms) => {
+          await permissionsMutation.mutateAsync(perms);
+        }}
+        isSubmitting={permissionsMutation.isPending}
       />
 
       {/* Modular Section 3: Status & Lifecycle */}
