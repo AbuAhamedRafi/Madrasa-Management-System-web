@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
@@ -15,16 +15,42 @@ export const AppLayout: React.FC = () => {
       {/* Sidebar - Matching #10364A */}
       <aside className="w-64 bg-[#10364A] text-white flex flex-col justify-between shrink-0 shadow-xl">
         <div>
-          {/* Logo Brand Header */}
-          <div className="p-6 flex items-center space-x-3 border-b border-white/10">
-            <div className="w-9 h-9 rounded-lg bg-[#137C73] flex items-center justify-center font-bold text-lg text-white shadow-md">
-              ⚙
+          {/* Logo Brand Header - Clickable Link to Dashboard */}
+          <Link
+            to="/app"
+            className="p-5 flex items-center space-x-3 border-b border-white/10 hover:bg-white/[0.04] transition-colors group cursor-pointer"
+            title={t('nav_dashboard')}
+          >
+            <div className="w-10 h-10 rounded-xl bg-[#137C73] flex items-center justify-center text-white shadow-md shrink-0 group-hover:scale-105 transition-transform">
+              <svg
+                className="w-5 h-5 text-white"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                {/* Madrasa Arch Silhouette */}
+                <path d="M12 3C7.5 6 5 9.5 5 15v6h14v-6c0-5.5-2.5-9-7-12z" />
+                {/* Open Book Emblem */}
+                <path
+                  d="M12 14c-1.5-.75-3-.75-4 0v4c1-.75 2.5-.75 4 0 1.5-.75 3-.75 4 0v-4c-1-.75-2.5-.75-4 0z"
+                  fill="currentColor"
+                  fillOpacity="0.25"
+                  strokeWidth="1.5"
+                />
+              </svg>
             </div>
-            <div>
-              <div className="font-bold text-sm tracking-wide text-white leading-tight">মাদ্রাসা ম্যানেজমেন্ট</div>
-              <div className="text-[10px] text-slate-400 font-mono tracking-wider">MADRASA MANAGEMENT SYSTEM</div>
+            <div className="min-w-0">
+              <div className="font-bold text-sm tracking-wide text-white leading-tight truncate group-hover:text-teal-200 transition-colors">
+                মাদ্রাসা ম্যানেজমেন্ট
+              </div>
+              <div className="text-[10px] text-slate-400 font-mono tracking-wider truncate">
+                MMS DASHBOARD
+              </div>
             </div>
-          </div>
+          </Link>
 
           {/* Navigation Workspace */}
           <div className="px-4 py-5">
@@ -88,16 +114,26 @@ export const AppLayout: React.FC = () => {
           </div>
         </div>
 
-        {/* Footer info */}
-        <div className="p-4 border-t border-white/10 text-[11px] text-slate-400 flex items-center justify-between">
-          <span>MMS v1.0 · Secure session</span>
+        {/* Sidebar Bottom Footer matching #10364A design */}
+        <div className="p-4 border-t border-white/10 space-y-2">
+          {/* Dedicated Logout Button */}
           <button
+            type="button"
             onClick={() => logout()}
-            className="text-slate-300 hover:text-red-400 transition-colors p-1"
-            title={t('nav_logout')}
+            className="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-rose-500/15 hover:text-rose-300 transition-all cursor-pointer group"
           >
-            <LogOut className="w-4 h-4" />
+            <LogOut className="w-4 h-4 text-slate-400 group-hover:text-rose-400 transition-colors" />
+            <span className="font-medium">{t('nav_logout')}</span>
           </button>
+
+          {/* Institutional Security & Session Badge */}
+          <div className="px-3 pt-1 flex items-center justify-between text-[11px] text-slate-400 border-t border-white/5">
+            <span className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>MMS v1.0</span>
+            </span>
+            <span className="font-mono text-[10px] text-slate-400">Secure</span>
+          </div>
         </div>
       </aside>
 
