@@ -18,9 +18,6 @@ import {
   Check,
   Phone,
   Calendar,
-  MapPin,
-  Clock,
-  ArrowRight,
 } from 'lucide-react';
 
 export const StudentProfilePage: React.FC = () => {

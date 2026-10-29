@@ -15,6 +15,8 @@ import {
   Layers,
   Building2,
   FolderTree,
+  Contact,
+  ShieldAlert,
 } from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
@@ -110,6 +112,26 @@ export const AppLayout: React.FC = () => {
                     <Layers className="w-4 h-4 text-teal-400" />
                     <span>{t('nav_offerings')}</span>
                   </NavLink>
+                </nav>
+              </div>
+            )}
+
+            {user?.permissions?.includes('students.read') && (
+              <div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                  {t('section_students')}
+                </div>
+                <nav className="space-y-1">
+                  <NavLink to="/app/students" className={navLinkClass}>
+                    <Contact className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_students')}</span>
+                  </NavLink>
+                  {user?.permissions?.includes('students.review_duplicates') && (
+                    <NavLink to="/app/admin/student-duplicates" className={navLinkClass}>
+                      <ShieldAlert className="w-4 h-4 text-teal-400" />
+                      <span>{t('nav_student_duplicates')}</span>
+                    </NavLink>
+                  )}
                 </nav>
               </div>
             )}

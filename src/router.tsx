@@ -16,6 +16,14 @@ import { CohortPeriodsPage } from './pages/academics/periods/CohortPeriodsPage';
 import { OfferingsSectionsPage } from './pages/academics/offerings/OfferingsSectionsPage';
 import { PeriodClosurePage } from './pages/academics/closure/PeriodClosurePage';
 import { InstitutionSettingsPage } from './pages/institution/InstitutionSettingsPage';
+import { StudentDirectoryPage } from './pages/students/directory/StudentDirectoryPage';
+import { NewStudentWizardPage } from './pages/students/registration/NewStudentWizardPage';
+import { StudentProfilePage } from './pages/students/profile/StudentProfilePage';
+import { StudentEditPage } from './pages/students/profile/StudentEditPage';
+import { GuardianManagementPage } from './pages/students/guardians/GuardianManagementPage';
+import { StudentDocumentsPage } from './pages/students/documents/StudentDocumentsPage';
+import { AcademicHistoryHandoffPage } from './pages/students/history/AcademicHistoryHandoffPage';
+import { AdminDuplicateReviewQueuePage } from './pages/students/duplicates/AdminDuplicateReviewQueuePage';
 import { ProtectedRoute, PublicRoute } from './components/RouteGuards';
 
 export const router = createBrowserRouter([
@@ -83,6 +91,51 @@ export const router = createBrowserRouter([
             element: <ProtectedRoute requiredPermission="institution.read" />,
             children: [
               { index: true, element: <InstitutionSettingsPage /> },
+            ],
+          },
+          // D03: Student & Guardian Management Routes
+          {
+            path: 'students',
+            element: <ProtectedRoute requiredPermission="students.read" />,
+            children: [
+              { index: true, element: <StudentDirectoryPage /> },
+              { path: ':id', element: <StudentProfilePage /> },
+              { path: ':id/history', element: <AcademicHistoryHandoffPage /> },
+            ],
+          },
+          {
+            path: 'students/new',
+            element: <ProtectedRoute requiredPermission="students.create" />,
+            children: [
+              { index: true, element: <NewStudentWizardPage /> },
+            ],
+          },
+          {
+            path: 'students/:id/edit',
+            element: <ProtectedRoute requiredPermission="students.update" />,
+            children: [
+              { index: true, element: <StudentEditPage /> },
+            ],
+          },
+          {
+            path: 'students/:id/guardians',
+            element: <ProtectedRoute requiredPermission="students.manage_guardians" />,
+            children: [
+              { index: true, element: <GuardianManagementPage /> },
+            ],
+          },
+          {
+            path: 'students/:id/documents',
+            element: <ProtectedRoute requiredPermission="students.manage_documents" />,
+            children: [
+              { index: true, element: <StudentDocumentsPage /> },
+            ],
+          },
+          {
+            path: 'admin/student-duplicates',
+            element: <ProtectedRoute requiredPermission="students.review_duplicates" />,
+            children: [
+              { index: true, element: <AdminDuplicateReviewQueuePage /> },
             ],
           },
           // D01: User & Role Management

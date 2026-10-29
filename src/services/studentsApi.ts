@@ -1,4 +1,4 @@
-import apiClient from './api';
+import { apiClient } from './apiClient';
 import type {
   Student,
   Guardian,
@@ -82,6 +82,19 @@ export const studentsApi = {
     return res.data.data;
   },
 
+  updateGuardianConsent: async (
+    studentId: number,
+    guardianId: number,
+    payload: { sms_consent: boolean; consent_source?: string }
+  ): Promise<Guardian> => {
+    return studentsApi.updateSmsConsent(
+      studentId,
+      guardianId,
+      payload.sms_consent,
+      payload.consent_source
+    );
+  },
+
   unlinkGuardian: async (studentId: number, guardianId: number): Promise<void> => {
     await apiClient.delete(`/api/v1/students/${studentId}/guardians/${guardianId}`);
   },
@@ -127,11 +140,21 @@ export const studentsApi = {
     return res.data;
   },
 
+  getDuplicateReviews: async (params?: {
+    status?: string;
+    page?: number;
+    page_size?: number;
+  }): Promise<{ data: StudentDuplicateReview[]; meta: any }> => {
+    return studentsApi.getAdminDuplicateReviews(params);
+  },
+
   decideDuplicateReview: async (
     id: number,
-    decision: 'APPROVE' | 'REJECT',
-    reason: string
+    payload: { decision: 'APPROVE' | 'REJECT'; reason: string } | 'APPROVE' | 'REJECT',
+    maybeReason?: string
   ): Promise<StudentDuplicateReview> => {
+    const decision = typeof payload === 'object' ? payload.decision : payload;
+    const reason = typeof payload === 'object' ? payload.reason : (maybeReason || '');
     const res = await apiClient.post(`/api/v1/admin/student-duplicates/${id}/decision`, {
       decision,
       reason,
@@ -173,12 +196,18 @@ export const studentsApi = {
   verifyDocument: async (
     studentId: number,
     documentId: number,
-    verificationStatus: 'VERIFIED' | 'REJECTED',
-    reason: string
+    payloadOrStatus: { status: 'VERIFIED' | 'REJECTED'; verification_note?: string } | 'VERIFIED' | 'REJECTED',
+    maybeReason?: string
   ): Promise<StudentDocument> => {
+    const status = typeof payloadOrStatus === 'object' ? payloadOrStatus.status : payloadOrStatus;
+    const reason =
+      typeof payloadOrStatus === 'object'
+        ? payloadOrStatus.verification_note || ''
+        : maybeReason || '';
+
     const res = await apiClient.post(
       `/api/v1/students/${studentId}/documents/${documentId}/verify`,
-      { verification_status: verificationStatus, reason }
+      { verification_status: status, reason }
     );
     return res.data.data;
   },
@@ -191,5 +220,13 @@ export const studentsApi = {
     await apiClient.delete(`/api/v1/students/${studentId}/documents/${documentId}`, {
       data: { reason },
     });
+  },
+
+  deleteDocument: async (
+    studentId: number,
+    documentId: number,
+    reason?: string
+  ): Promise<void> => {
+    return studentsApi.archiveDocument(studentId, documentId, reason);
   },
 };

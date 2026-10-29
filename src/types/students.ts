@@ -12,8 +12,11 @@ export type GuardianRelation = 'FATHER' | 'MOTHER' | 'LEGAL_GUARDIAN' | 'OTHER';
 export type DocumentType =
   | 'BIRTH_CERTIFICATE'
   | 'PREVIOUS_TRANSCRIPT'
+  | 'NID'
   | 'NID_GUARDIAN'
+  | 'GUARDIAN_NID'
   | 'MEDICAL'
+  | 'PHOTO'
   | 'OTHER';
 
 export type DocumentVerificationStatus = 'PENDING' | 'VERIFIED' | 'REJECTED';
@@ -49,13 +52,18 @@ export interface StudentIdentifier {
 export interface StudentDocument {
   id: number;
   student_id: number;
-  type: DocumentType;
-  file_name: string;
+  type?: DocumentType;
+  document_type?: DocumentType;
+  file_name?: string;
+  original_filename?: string;
   mime_type: string;
-  size_bytes: number;
-  sha256: string;
+  size_bytes?: number;
+  file_size_bytes?: number;
+  sha256?: string;
+  sha256_hash?: string;
   verification_status: DocumentVerificationStatus;
   verification_reason?: string | null;
+  verification_note?: string | null;
   uploaded_by?: {
     id: number;
     username: string;
@@ -111,6 +119,8 @@ export interface Student {
   updated_at?: string;
 }
 
+export type StudentProfile = Student;
+
 export interface DuplicateCandidateMatch {
   student_id: string;
   name_bn: string;
@@ -130,10 +140,13 @@ export interface DuplicateCheckResult {
 
 export interface StudentDuplicateReview {
   id: number;
-  proposed_payload_hash: string;
-  candidate_matches: any[];
+  proposed_payload_hash?: string;
+  payload?: any;
+  candidate_matches?: any[];
+  matched_reasons?: string[];
   status: DuplicateReviewStatus;
   decision_reason?: string | null;
+  review_reason?: string | null;
   submitted_by?: number;
   submitter?: {
     id: number;
@@ -151,5 +164,7 @@ export interface StudentDuplicateReview {
   student_id?: number | null;
   student?: Student | null;
   expires_at?: string | null;
-  created_at?: string;
+  created_at: string;
 }
+
+export type DuplicateReviewTicket = StudentDuplicateReview;
