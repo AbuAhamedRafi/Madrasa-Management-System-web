@@ -296,3 +296,4 @@ export const StudentEditPage: React.FC = () => {
     </div>
   );
 };
+

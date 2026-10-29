@@ -62,3 +62,4 @@ export const StudentStatusBadge: React.FC<Props> = ({ status }) => {
     </span>
   );
 };
+

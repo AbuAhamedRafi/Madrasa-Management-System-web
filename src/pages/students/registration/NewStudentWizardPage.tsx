@@ -674,3 +674,4 @@ export const NewStudentWizardPage: React.FC = () => {
     </div>
   );
 };
+
