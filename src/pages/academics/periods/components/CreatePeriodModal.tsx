@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AcademicCohort, AcademicProgram } from '../../../../types/academics';
+import type { AcademicCohort, AcademicProgram } from '../../../../types/academics';
 import { academicsApi } from '../../../../services/academicsApi';
 import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
@@ -47,7 +47,6 @@ export const CreatePeriodModal: React.FC<Props> = ({
         calendar_year: !isSession ? Number(calendarYear) : null,
         start_date: startDate,
         end_date: endDate,
-        state: 'PLANNED',
       });
       onCreated();
       onClose();

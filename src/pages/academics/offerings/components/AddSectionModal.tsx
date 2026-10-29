@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AcademicOffering } from '../../../../types/academics';
+import type { AcademicOffering } from '../../../../types/academics';
 import { academicsApi } from '../../../../services/academicsApi';
 import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
@@ -33,7 +33,6 @@ export const AddSectionModal: React.FC<Props> = ({ offering, onClose, onCreated 
         name_bn: nameBn,
         name_en: nameEn,
         capacity: Number(capacity),
-        is_active: true,
       });
       onCreated();
       onClose();

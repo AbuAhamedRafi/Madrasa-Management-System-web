@@ -1,5 +1,5 @@
 import React from 'react';
-import { AcademicCohort, AcademicProgram } from '../../../../types/academics';
+import type { AcademicCohort, AcademicProgram } from '../../../../types/academics';
 import { PeriodStatusChip } from '../../../../components/academics/PeriodStatusChip';
 import { useTranslation } from 'react-i18next';
 import { Plus, Users } from 'lucide-react';
@@ -24,16 +24,16 @@ export const AdmissionCohortsCard: React.FC<Props> = ({
   const { i18n } = useTranslation();
   const isBn = i18n.language === 'bn';
 
-  if (program && program.scheme === 'YEAR_BASED') {
+  if (program && program.scheme === 'CALENDAR_YEAR') {
     return (
       <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-2">
         <h3 className="text-sm font-semibold text-slate-900">
-          {isBn ? 'ভর্তি ব্যাচ / সেশন প্রযোজ্য নয়' : 'Cohorts Not Required (Year-Based)'}
+          {isBn ? 'ভর্তি ব্যাচ / সেশন প্রযোজ্য নয়' : 'Cohorts Not Required (Calendar Year)'}
         </h3>
         <p className="text-xs text-slate-500">
           {isBn
-            ? 'এই প্রোগ্রামটি বার্ষিক ক্লাস স্কিম (YEAR_BASED) অনুসরণ করে, তাই সেশন ব্যাচের পরিবর্তে সরাসরি বার্ষিক শিক্ষাবর্ষ ব্যবহৃত হয়।'
-            : 'This program uses the YEAR_BASED scheme. Study periods run directly per calendar year.'}
+            ? 'এই প্রোগ্রামটি বার্ষিক ক্লাস স্কিম (CALENDAR_YEAR) অনুসরণ করে, তাই সেশন ব্যাচের পরিবর্তে সরাসরি বার্ষিক শিক্ষাবর্ষ ব্যবহৃত হয়।'
+            : 'This program uses the CALENDAR_YEAR scheme. Study periods run directly per calendar year.'}
         </p>
       </div>
     );

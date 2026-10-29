@@ -98,3 +98,4 @@ export const InstitutionLogoCard: React.FC<Props> = ({
     </div>
   );
 };
+

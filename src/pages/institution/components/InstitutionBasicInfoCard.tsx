@@ -14,8 +14,8 @@ interface Props {
   setAddressEn: (val: string) => void;
   phone: string;
   setPhone: (val: string) => void;
-  defaultLocale: 'bn' | 'en';
-  setDefaultLocale: (val: 'bn' | 'en') => void;
+  defaultLocale: 'bn-BD' | 'en';
+  setDefaultLocale: (val: 'bn-BD' | 'en') => void;
   timezone: string;
   canUpdate: boolean;
   submitting: boolean;
@@ -150,10 +150,10 @@ export const InstitutionBasicInfoCard: React.FC<Props> = ({
           <select
             disabled={!canUpdate}
             value={defaultLocale}
-            onChange={(e) => setDefaultLocale(e.target.value as 'bn' | 'en')}
+            onChange={(e) => setDefaultLocale(e.target.value as 'bn-BD' | 'en')}
             className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm disabled:bg-slate-100"
           >
-            <option value="bn">বাংলা (Bangla - Default)</option>
+            <option value="bn-BD">বাংলা (Bangla - Default)</option>
             <option value="en">English</option>
           </select>
         </div>

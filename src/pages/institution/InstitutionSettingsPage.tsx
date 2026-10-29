@@ -17,7 +17,7 @@ export const InstitutionSettingsPage: React.FC = () => {
   const [addressEn, setAddressEn] = useState('');
   const [phone, setPhone] = useState('');
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
-  const [defaultLocale, setDefaultLocale] = useState<'bn' | 'en'>('bn');
+  const [defaultLocale, setDefaultLocale] = useState<'bn-BD' | 'en'>('bn-BD');
   const [timezone, setTimezone] = useState('Asia/Dhaka');
 
   const [submitting, setSubmitting] = useState(false);

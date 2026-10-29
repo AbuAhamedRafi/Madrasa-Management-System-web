@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AcademicPeriod, AcademicTrack, ProgramClass } from '../../../../types/academics';
+import type { AcademicPeriod, AcademicTrack, ProgramClass } from '../../../../types/academics';
 import { useTranslation } from 'react-i18next';
 import { Plus } from 'lucide-react';
 

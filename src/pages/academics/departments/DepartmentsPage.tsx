@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { academicsApi } from '../../../services/academicsApi';
-import { Department } from '../../../types/academics';
+import type { Department } from '../../../types/academics';
 import { CreateDepartmentModal } from '../structure/components/CreateDepartmentModal';
 import { useAuth } from '../../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
@@ -22,8 +22,8 @@ export const DepartmentsPage: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await academicsApi.listDepartments();
-      setDepartments(res.data);
+      const data = await academicsApi.getDepartments();
+      setDepartments(data);
     } catch (err: any) {
       setError(err?.response?.data?.error?.message || 'Failed to load departments.');
     } finally {

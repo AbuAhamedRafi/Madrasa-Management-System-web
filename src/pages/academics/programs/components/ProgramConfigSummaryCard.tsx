@@ -1,5 +1,5 @@
 import React from 'react';
-import { AcademicScheme } from '../../../../types/academics';
+import type { AcademicScheme } from '../../../../types/academics';
 import { SchemeBadge } from '../../../../components/academics/SchemeBadge';
 import { useTranslation } from 'react-i18next';
 import { Info } from 'lucide-react';
@@ -38,7 +38,7 @@ export const ProgramConfigSummaryCard: React.FC<Props> = ({
             : 'In SESSION_BASED programs (e.g. Alim, Fazil, Kamil, Dawra-e-Hadith), each study period belongs to an admission cohort (e.g. 2026-27) and a study year number.'
           : isBn
           ? 'বার্ষিক ক্লাস প্রোগ্রামের ক্ষেত্রে (যেমন ইবতেদায়ী, দাখিল, হিফজ) শিক্ষাবর্ষগুলো সরাসরি ক্যালেন্ডার বর্ষ (যেমন ২০২৬ শিক্ষাবর্ষ) অনুযায়ী পরিচালিত হয়।'
-          : 'In YEAR_BASED programs (e.g. Ebtedayee, Dakhil, Hifz), study periods run per calendar year without requiring an admission cohort.'}
+          : 'In CALENDAR_YEAR programs (e.g. Ebtedayee, Dakhil, Hifz), study periods run per calendar year without requiring an admission cohort.'}
       </p>
 
       <div className="border-t border-slate-100 pt-3 space-y-2 text-xs text-slate-700">

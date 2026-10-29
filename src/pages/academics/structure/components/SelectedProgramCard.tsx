@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProgramStructure } from '../../../../types/academics';
+import type { AcademicProgram } from '../../../../types/academics';
 import { SchemeBadge } from '../../../../components/academics/SchemeBadge';
 import { PeriodStatusChip } from '../../../../components/academics/PeriodStatusChip';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { Edit3, Layers, CalendarRange, Lock } from 'lucide-react';
 
 interface Props {
-  structure: ProgramStructure | null;
+  structure: AcademicProgram | null;
   canManageStructure: boolean;
 }
 
@@ -24,6 +24,9 @@ export const SelectedProgramCard: React.FC<Props> = ({ structure, canManageStruc
       </div>
     );
   }
+
+  const classes = structure.classes ?? [];
+  const tracks = structure.tracks ?? [];
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden space-y-5 p-5">
@@ -52,7 +55,6 @@ export const SelectedProgramCard: React.FC<Props> = ({ structure, canManageStruc
         )}
       </div>
 
-      {/* Scheme Lock Info */}
       {structure.has_dependencies && (
         <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 flex items-center gap-2 text-xs text-amber-800">
           <Lock className="w-4 h-4 shrink-0" />
@@ -64,14 +66,12 @@ export const SelectedProgramCard: React.FC<Props> = ({ structure, canManageStruc
         </div>
       )}
 
-      {/* Reusable Classes */}
       <div>
         <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-          {isBn ? 'পুনর্ব্যবহারযোগ্য ক্লাস / জামাত' : 'Reusable Program Classes'} (
-          {structure.classes.length})
+          {isBn ? 'পুনর্ব্যবহারযোগ্য ক্লাস / জামাত' : 'Reusable Program Classes'} ({classes.length})
         </h4>
         <div className="space-y-1.5">
-          {structure.classes.map((cls) => (
+          {classes.map((cls) => (
             <div
               key={cls.id}
               className="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between text-xs"
@@ -90,19 +90,17 @@ export const SelectedProgramCard: React.FC<Props> = ({ structure, canManageStruc
         </div>
       </div>
 
-      {/* Academic Tracks */}
       <div>
         <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-          {isBn ? 'একাডেমিক বিভাগ / গ্রুপ (Tracks)' : 'Academic Tracks / Streams'} (
-          {structure.tracks.length})
+          {isBn ? 'একাডেমিক বিভাগ / গ্রুপ (Tracks)' : 'Academic Tracks / Streams'} ({tracks.length})
         </h4>
-        {structure.tracks.length === 0 ? (
+        {tracks.length === 0 ? (
           <div className="text-xs text-slate-400">
             {isBn ? 'কোনো আলাদা গ্রুপ/ট্র্যাক নেই (সাধারণ)' : 'No separate tracks (General)'}
           </div>
         ) : (
           <div className="flex flex-wrap gap-1.5">
-            {structure.tracks.map((trk) => (
+            {tracks.map((trk) => (
               <span
                 key={trk.id}
                 className="px-2.5 py-1 rounded-md bg-teal-50 text-teal-800 border border-teal-200 text-xs font-medium"
@@ -114,7 +112,6 @@ export const SelectedProgramCard: React.FC<Props> = ({ structure, canManageStruc
         )}
       </div>
 
-      {/* Quick Links */}
       <div className="pt-3 border-t border-slate-100 flex flex-wrap gap-2">
         <Link
           to={`/app/academics/periods?program_id=${structure.id}`}

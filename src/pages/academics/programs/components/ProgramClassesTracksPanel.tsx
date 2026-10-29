@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AcademicTrack, ProgramClass } from '../../../../types/academics';
+import type { AcademicTrack, ProgramClass } from '../../../../types/academics';
 import { academicsApi } from '../../../../services/academicsApi';
 import { useTranslation } from 'react-i18next';
 import { Plus } from 'lucide-react';
@@ -80,7 +80,6 @@ export const ProgramClassesTracksPanel: React.FC<Props> = ({
         </div>
       )}
 
-      {/* Program Classes */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-5 space-y-4">
         <div>
           <h3 className="text-base font-semibold text-slate-900">
@@ -156,7 +155,6 @@ export const ProgramClassesTracksPanel: React.FC<Props> = ({
         </form>
       </div>
 
-      {/* Academic Tracks */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-5 space-y-4">
         <div>
           <h3 className="text-base font-semibold text-slate-900">

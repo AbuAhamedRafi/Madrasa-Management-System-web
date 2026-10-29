@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { academicsApi } from '../../../services/academicsApi';
-import { AcademicHierarchyData, ProgramStructure } from '../../../types/academics';
+import type { AcademicProgram, HierarchyAuthorityNode } from '../../../types/academics';
 import { HierarchyTreePanel } from './components/HierarchyTreePanel';
 import { SelectedProgramCard } from './components/SelectedProgramCard';
 import { CreateDepartmentModal } from './components/CreateDepartmentModal';
@@ -14,9 +14,9 @@ export const EducationHierarchyPage: React.FC = () => {
   const isBn = i18n.language === 'bn';
   const { hasPermission } = useAuth();
 
-  const [hierarchy, setHierarchy] = useState<AcademicHierarchyData | null>(null);
+  const [authorities, setAuthorities] = useState<HierarchyAuthorityNode[]>([]);
   const [selectedProgramId, setSelectedProgramId] = useState<number | null>(null);
-  const [programStructure, setProgramStructure] = useState<ProgramStructure | null>(null);
+  const [programStructure, setProgramStructure] = useState<AcademicProgram | null>(null);
   const [search, setSearch] = useState('');
   const [showDeptModal, setShowDeptModal] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -26,13 +26,14 @@ export const EducationHierarchyPage: React.FC = () => {
   const loadHierarchy = async () => {
     try {
       setLoading(true);
-      const data = await academicsApi.getHierarchy(undefined, search || undefined);
-      setHierarchy(data);
+      const data = await academicsApi.getHierarchy(search ? { search } : undefined);
+      setAuthorities(data);
 
       if (!selectedProgramId) {
-        const firstProgram = data.authorities
+        const firstProgram = data
           .flatMap((a) => a.levels)
-          .flatMap((l) => l.programs)[0];
+          .flatMap((l) => l.departments)
+          .flatMap((d) => d.programs)[0];
         if (firstProgram) {
           setSelectedProgramId(firstProgram.id);
         }
@@ -96,7 +97,6 @@ export const EducationHierarchyPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Search Bar */}
       <div className="bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between gap-3">
         <input
           type="text"
@@ -111,28 +111,26 @@ export const EducationHierarchyPage: React.FC = () => {
         />
       </div>
 
-      {loading && !hierarchy ? (
+      {loading && authorities.length === 0 ? (
         <div className="p-8 text-center text-sm text-slate-500 bg-white rounded-xl border border-slate-200">
           {isBn ? 'শিক্ষা কাঠামো লোড হচ্ছে...' : 'Loading education hierarchy...'}
         </div>
       ) : (
-        hierarchy && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div className="lg:col-span-7">
-              <HierarchyTreePanel
-                authorities={hierarchy.authorities}
-                selectedProgramId={selectedProgramId}
-                onSelectProgram={setSelectedProgramId}
-              />
-            </div>
-            <div className="lg:col-span-5">
-              <SelectedProgramCard
-                structure={programStructure}
-                canManageStructure={canManageStructure}
-              />
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="lg:col-span-7">
+            <HierarchyTreePanel
+              authorities={authorities}
+              selectedProgramId={selectedProgramId}
+              onSelectProgram={setSelectedProgramId}
+            />
           </div>
-        )
+          <div className="lg:col-span-5">
+            <SelectedProgramCard
+              structure={programStructure}
+              canManageStructure={canManageStructure}
+            />
+          </div>
+        </div>
       )}
 
       <CreateDepartmentModal

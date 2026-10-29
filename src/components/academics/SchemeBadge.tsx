@@ -24,3 +24,4 @@ export const SchemeBadge: React.FC<Props> = ({ scheme }) => {
     </span>
   );
 };
+

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { academicsApi } from '../../../services/academicsApi';
-import {
+import type {
   AcademicScheme,
   AcademicTrack,
   Department,
@@ -27,7 +27,7 @@ export const ProgramEditorPage: React.FC = () => {
   const [nameEn, setNameEn] = useState('');
   const [departmentId, setDepartmentId] = useState<number | ''>('');
   const [levelId, setLevelId] = useState<number | ''>('');
-  const [scheme, setScheme] = useState<AcademicScheme>('YEAR_BASED');
+  const [scheme, setScheme] = useState<AcademicScheme>('CALENDAR_YEAR');
   const [durationYears, setDurationYears] = useState<number>(1);
   const [state, setState] = useState<ProgramState>('ACTIVE');
   const [hasDependencies, setHasDependencies] = useState(false);
@@ -50,16 +50,16 @@ export const ProgramEditorPage: React.FC = () => {
     setScheme(s.scheme);
     setDurationYears(s.duration_years);
     setState(s.state);
-    setHasDependencies(s.has_dependencies);
-    setClasses(s.classes);
-    setTracks(s.tracks);
+    setHasDependencies(Boolean(s.has_dependencies));
+    setClasses(s.classes ?? []);
+    setTracks(s.tracks ?? []);
   };
 
   useEffect(() => {
-    Promise.all([academicsApi.listDepartments(), academicsApi.listLevels()]).then(
-      ([deptRes, lvlRes]) => {
-        setDepartments(deptRes.data);
-        setLevels(lvlRes.data);
+    Promise.all([academicsApi.getDepartments(), academicsApi.getLevels()]).then(
+      ([deptData, lvlData]) => {
+        setDepartments(deptData);
+        setLevels(lvlData);
       }
     );
 

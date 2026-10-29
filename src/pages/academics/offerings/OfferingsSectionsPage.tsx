@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { academicsApi } from '../../../services/academicsApi';
-import {
+import type {
   AcademicOffering,
   AcademicPeriod,
   AcademicProgram,
@@ -42,10 +42,10 @@ export const OfferingsSectionsPage: React.FC = () => {
   const canManageOfferings = hasPermission('academics.manage_offerings');
 
   useEffect(() => {
-    academicsApi.listPrograms().then((res) => {
-      setPrograms(res.data);
-      if (!selectedProgramId && res.data.length > 0) {
-        setSelectedProgramId(res.data[0].id);
+    academicsApi.getPrograms().then((data) => {
+      setPrograms(data);
+      if (!selectedProgramId && data.length > 0) {
+        setSelectedProgramId(data[0].id);
       }
     });
   }, []);
@@ -53,18 +53,18 @@ export const OfferingsSectionsPage: React.FC = () => {
   useEffect(() => {
     if (!selectedProgramId) return;
     Promise.all([
-      academicsApi.listPeriods({ program_id: selectedProgramId }),
-      academicsApi.listClasses(selectedProgramId),
-      academicsApi.listTracks(selectedProgramId),
-    ]).then(([periodRes, clsRes, trkRes]) => {
-      setPeriods(periodRes.data);
-      setClasses(clsRes.data);
-      setTracks(trkRes.data);
+      academicsApi.getPeriods({ program_id: selectedProgramId }),
+      academicsApi.getClasses(selectedProgramId),
+      academicsApi.getTracks(selectedProgramId),
+    ]).then(([periodData, clsData, trkData]) => {
+      setPeriods(periodData);
+      setClasses(clsData);
+      setTracks(trkData);
       if (
-        periodRes.data.length > 0 &&
-        (!selectedPeriodId || !periodRes.data.some((p) => p.id === selectedPeriodId))
+        periodData.length > 0 &&
+        (!selectedPeriodId || !periodData.some((p) => p.id === selectedPeriodId))
       ) {
-        setSelectedPeriodId(periodRes.data[0].id);
+        setSelectedPeriodId(periodData[0].id);
       }
     });
   }, [selectedProgramId]);
@@ -74,8 +74,8 @@ export const OfferingsSectionsPage: React.FC = () => {
       setOfferings([]);
       return;
     }
-    const res = await academicsApi.listOfferings(selectedPeriodId);
-    setOfferings(res.data);
+    const data = await academicsApi.getOfferings(selectedPeriodId);
+    setOfferings(data);
   };
 
   useEffect(() => {
@@ -92,7 +92,6 @@ export const OfferingsSectionsPage: React.FC = () => {
         academic_period_id: selectedPeriodId,
         program_class_id: classId,
         academic_track_id: trackId,
-        is_active: true,
       });
       await loadOfferings();
     } catch (err: any) {
@@ -125,7 +124,6 @@ export const OfferingsSectionsPage: React.FC = () => {
         )}
       </div>
 
-      {/* Filter Bar */}
       <div className="bg-white rounded-xl border border-slate-200 p-4 flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
           <label className="text-xs font-semibold text-slate-700">

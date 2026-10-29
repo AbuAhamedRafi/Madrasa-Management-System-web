@@ -1,5 +1,5 @@
 import React from 'react';
-import { AcademicPeriod } from '../../../../types/academics';
+import type { AcademicPeriod } from '../../../../types/academics';
 import { PeriodStatusChip } from '../../../../components/academics/PeriodStatusChip';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';

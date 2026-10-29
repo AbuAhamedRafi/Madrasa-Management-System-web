@@ -35,7 +35,7 @@ export const CreateCohortModal: React.FC<Props> = ({
         program_id: programId,
         label,
         intake_year: Number(intakeYear),
-        status: 'PLANNED',
+        status: 'DRAFT',
       });
       onCreated();
       onClose();

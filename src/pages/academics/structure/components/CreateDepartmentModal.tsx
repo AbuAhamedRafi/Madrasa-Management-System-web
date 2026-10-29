@@ -16,8 +16,6 @@ export const CreateDepartmentModal: React.FC<Props> = ({ isOpen, onClose, onCrea
   const [code, setCode] = useState('');
   const [nameBn, setNameBn] = useState('');
   const [nameEn, setNameEn] = useState('');
-  const [descriptionBn, setDescriptionBn] = useState('');
-  const [descriptionEn, setDescriptionEn] = useState('');
   const [sortOrder, setSortOrder] = useState(10);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,10 +31,7 @@ export const CreateDepartmentModal: React.FC<Props> = ({ isOpen, onClose, onCrea
         code,
         name_bn: nameBn,
         name_en: nameEn,
-        description_bn: descriptionBn || null,
-        description_en: descriptionEn || null,
         sort_order: Number(sortOrder),
-        is_active: true,
       });
       setCode('');
       setNameBn('');
@@ -113,18 +108,16 @@ export const CreateDepartmentModal: React.FC<Props> = ({ isOpen, onClose, onCrea
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                {isBn ? 'ক্রম (Sort Order)' : 'Sort Order'}
-              </label>
-              <input
-                type="number"
-                value={sortOrder}
-                onChange={(e) => setSortOrder(Number(e.target.value))}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
-              />
-            </div>
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">
+              {isBn ? 'ক্রম (Sort Order)' : 'Sort Order'}
+            </label>
+            <input
+              type="number"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(Number(e.target.value))}
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+            />
           </div>
 
           <div className="flex items-center justify-end gap-2 pt-2">

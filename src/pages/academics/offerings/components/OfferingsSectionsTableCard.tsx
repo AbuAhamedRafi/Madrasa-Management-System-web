@@ -1,5 +1,5 @@
 import React from 'react';
-import { AcademicOffering } from '../../../../types/academics';
+import type { AcademicOffering } from '../../../../types/academics';
 import { useTranslation } from 'react-i18next';
 import { Plus, Users } from 'lucide-react';
 

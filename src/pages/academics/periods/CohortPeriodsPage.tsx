@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { academicsApi } from '../../../services/academicsApi';
-import { AcademicCohort, AcademicPeriod, AcademicProgram } from '../../../types/academics';
+import type { AcademicCohort, AcademicPeriod, AcademicProgram } from '../../../types/academics';
 import { AdmissionCohortsCard } from './components/AdmissionCohortsCard';
 import { StudyPeriodsTimelineCard } from './components/StudyPeriodsTimelineCard';
 import { CreateCohortModal } from './components/CreateCohortModal';
@@ -30,10 +30,10 @@ export const CohortPeriodsPage: React.FC = () => {
   const canManagePeriods = hasPermission('academics.manage_periods');
 
   useEffect(() => {
-    academicsApi.listPrograms().then((res) => {
-      setPrograms(res.data);
-      if (!selectedProgramId && res.data.length > 0) {
-        setSelectedProgramId(res.data[0].id);
+    academicsApi.getPrograms().then((data) => {
+      setPrograms(data);
+      if (!selectedProgramId && data.length > 0) {
+        setSelectedProgramId(data[0].id);
       }
     });
   }, []);
@@ -42,15 +42,15 @@ export const CohortPeriodsPage: React.FC = () => {
 
   const loadCohortsAndPeriods = async () => {
     if (!selectedProgramId) return;
-    const [cohortRes, periodRes] = await Promise.all([
-      academicsApi.listCohorts(selectedProgramId),
-      academicsApi.listPeriods({
+    const [cohortData, periodData] = await Promise.all([
+      academicsApi.getCohorts(selectedProgramId),
+      academicsApi.getPeriods({
         program_id: selectedProgramId,
         cohort_id: selectedCohortId ?? undefined,
       }),
     ]);
-    setCohorts(cohortRes.data);
-    setPeriods(periodRes.data);
+    setCohorts(cohortData);
+    setPeriods(periodData);
   };
 
   useEffect(() => {
@@ -70,7 +70,6 @@ export const CohortPeriodsPage: React.FC = () => {
         </p>
       </div>
 
-      {/* Program Selector Bar */}
       <div className="bg-white rounded-xl border border-slate-200 p-4 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <label className="text-xs font-semibold text-slate-700">
