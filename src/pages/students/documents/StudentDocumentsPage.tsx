@@ -61,6 +61,11 @@ export const StudentDocumentsPage: React.FC = () => {
     e.preventDefault();
     if (!id || !uploadFile) return;
 
+    if (uploadFile.type !== 'application/pdf' && !uploadFile.name.toLowerCase().endsWith('.pdf')) {
+      setError(isBn ? 'শুধুমাত্র PDF ফাইল (.pdf) আপলোড করা যাবে।' : 'Only PDF files (.pdf) are accepted.');
+      return;
+    }
+
     if (uploadFile.size > 5 * 1024 * 1024) {
       setError(isBn ? 'ফাইলের আকার সর্বোচ্চ ৫ মেগাবাইট হতে পারবে।' : 'File size cannot exceed 5MB.');
       return;
@@ -237,8 +242,8 @@ export const StudentDocumentsPage: React.FC = () => {
             </h2>
             <p className="text-xs text-slate-500">
               {isBn
-                ? 'PDF, JPEG, বা PNG ফরম্যাট (সর্বোচ্চ ৫ মেগাবাইট)। নিরাপদ প্রাইভেট স্টোরেজে সংরক্ষিত হবে।'
-                : 'Supports PDF, JPEG, or PNG (Max 5MB). Stored securely in private storage.'}
+                ? 'শুধুমাত্র PDF ফাইল (সর্বোচ্চ ৫ মেগাবাইট)। নিরাপদ প্রাইভেট স্টোরেজে সংরক্ষিত হবে।'
+                : 'Only PDF documents are accepted (Max 5MB). Stored securely in private storage.'}
             </p>
 
             <div>
@@ -254,19 +259,18 @@ export const StudentDocumentsPage: React.FC = () => {
                 <option value="NID">{isBn ? 'জাতীয় পরিচয়পত্র' : 'NID'}</option>
                 <option value="PREVIOUS_TRANSCRIPT">{isBn ? 'পূর্বের সনদ / মার্কশিট' : 'Previous Transcript'}</option>
                 <option value="GUARDIAN_NID">{isBn ? 'অভিভাবকের এনআইডি' : 'Guardian NID'}</option>
-                <option value="PHOTO">{isBn ? 'শিক্ষার্থীর ছবি' : 'Student Photo'}</option>
                 <option value="OTHER">{isBn ? 'অন্যান্য নথি' : 'Other'}</option>
               </select>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">
-                {isBn ? 'ফাইল নির্বাচন করুন *' : 'Select File *'}
+                {isBn ? 'PDF ফাইল নির্বাচন করুন *' : 'Select PDF File *'}
               </label>
               <input
                 type="file"
                 required
-                accept=".pdf,.png,.jpg,.jpeg"
+                accept=".pdf,application/pdf"
                 onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
                 className="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 cursor-pointer"
               />
