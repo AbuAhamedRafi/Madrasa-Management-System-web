@@ -18,7 +18,7 @@ export const ProgramConfigSummaryCard: React.FC<Props> = ({
   tracksCount,
 }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-5 space-y-4">

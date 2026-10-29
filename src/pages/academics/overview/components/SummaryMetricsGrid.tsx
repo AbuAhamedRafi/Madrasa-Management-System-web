@@ -9,7 +9,7 @@ interface Props {
 
 export const SummaryMetricsGrid: React.FC<Props> = ({ metrics }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   const cards = [
     {

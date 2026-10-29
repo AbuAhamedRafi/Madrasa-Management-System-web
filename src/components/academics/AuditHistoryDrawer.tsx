@@ -9,7 +9,7 @@ interface Props {
 
 export const AuditHistoryDrawer: React.FC<Props> = ({ entries }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   if (!entries || entries.length === 0) {
     return (

@@ -16,7 +16,7 @@ interface Props {
 
 export const CreatePermissionModal: React.FC<Props> = ({ onClose, onSubmit, isSubmitting }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   const [key, setKey] = useState('');
   const [module, setModule] = useState('D01_Users');

@@ -53,7 +53,7 @@ export const ProgramIdentityFormCard: React.FC<Props> = ({
   onSubmit,
 }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   return (
     <form

@@ -17,7 +17,7 @@ export const StudyPeriodsTimelineCard: React.FC<Props> = ({
   onOpenCreatePeriod,
 }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">

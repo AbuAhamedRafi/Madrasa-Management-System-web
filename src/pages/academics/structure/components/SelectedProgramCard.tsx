@@ -13,7 +13,7 @@ interface Props {
 
 export const SelectedProgramCard: React.FC<Props> = ({ structure, canManageStructure }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   if (!structure) {
     return (

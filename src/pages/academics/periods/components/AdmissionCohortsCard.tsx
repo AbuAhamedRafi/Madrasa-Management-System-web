@@ -22,7 +22,7 @@ export const AdmissionCohortsCard: React.FC<Props> = ({
   onOpenCreate,
 }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   if (program && program.scheme === 'CALENDAR_YEAR') {
     return (

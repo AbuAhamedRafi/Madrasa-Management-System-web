@@ -17,7 +17,7 @@ export const CreateCohortModal: React.FC<Props> = ({
   onCreated,
 }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   const [label, setLabel] = useState('2026-27');
   const [intakeYear, setIntakeYear] = useState(2026);

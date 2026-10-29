@@ -14,12 +14,14 @@ import {
   CalendarRange,
   Layers,
   Building2,
+  FolderTree,
 } from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
   const { user, logout } = useAuth();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const isBn = i18n.language.startsWith('bn');
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     `flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -72,7 +74,7 @@ export const AppLayout: React.FC = () => {
           <div className="px-4 py-4 space-y-5">
             <div>
               <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
-                Workspace
+                {t('section_workspace')}
               </div>
               <nav className="space-y-1">
                 <NavLink to="/app" end className={navLinkClass}>
@@ -85,7 +87,7 @@ export const AppLayout: React.FC = () => {
             {user?.permissions?.includes('academics.read') && (
               <div>
                 <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
-                  Academics (D02)
+                  {t('section_academics')}
                 </div>
                 <nav className="space-y-1">
                   <NavLink to="/app/academics" end className={navLinkClass}>
@@ -95,6 +97,10 @@ export const AppLayout: React.FC = () => {
                   <NavLink to="/app/academics/structure" className={navLinkClass}>
                     <Network className="w-4 h-4 text-teal-400" />
                     <span>{t('nav_hierarchy')}</span>
+                  </NavLink>
+                  <NavLink to="/app/academics/departments" className={navLinkClass}>
+                    <FolderTree className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_departments')}</span>
                   </NavLink>
                   <NavLink to="/app/academics/periods" className={navLinkClass}>
                     <CalendarRange className="w-4 h-4 text-teal-400" />
@@ -110,7 +116,7 @@ export const AppLayout: React.FC = () => {
 
             <div>
               <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
-                Administration
+                {t('section_administration')}
               </div>
               <nav className="space-y-1">
                 {user?.permissions?.includes('institution.read') && (
@@ -167,7 +173,7 @@ export const AppLayout: React.FC = () => {
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         <header className="h-16 bg-white border-b border-slate-200 px-8 flex items-center justify-between shrink-0 shadow-xs">
           <div className="text-xs text-slate-500 font-medium">
-            MMS Platform / Workspace
+            {isBn ? 'মাদ্রাসা ম্যানেজমেন্ট সিস্টেম / ওয়ার্কস্পেস' : 'MMS Platform / Workspace'}
           </div>
 
           <div className="flex items-center space-x-5">
@@ -181,7 +187,7 @@ export const AppLayout: React.FC = () => {
                 {user?.name_en?.charAt(0) || user?.username?.charAt(0) || 'U'}
               </div>
               <div className="text-sm font-semibold text-slate-800">
-                {user?.name_en || user?.username}
+                {isBn ? user?.name_bn || user?.name_en || user?.username : user?.name_en || user?.username}
               </div>
             </div>
           </div>

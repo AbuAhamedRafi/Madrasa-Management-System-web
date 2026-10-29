@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 export const CohortPeriodsPage: React.FC = () => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
   const { hasPermission } = useAuth();
   const [searchParams] = useSearchParams();
 

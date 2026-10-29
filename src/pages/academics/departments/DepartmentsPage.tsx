@@ -8,7 +8,7 @@ import { Plus, Power } from 'lucide-react';
 
 export const DepartmentsPage: React.FC = () => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
   const { hasPermission } = useAuth();
 
   const [departments, setDepartments] = useState<Department[]>([]);

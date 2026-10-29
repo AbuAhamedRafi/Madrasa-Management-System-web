@@ -8,7 +8,7 @@ interface Props {
 
 export const SchemeBadge: React.FC<Props> = ({ scheme }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   if (scheme === 'SESSION_BASED') {
     return (

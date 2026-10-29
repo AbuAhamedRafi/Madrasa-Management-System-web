@@ -20,7 +20,7 @@ export const ProgramEditorPage: React.FC = () => {
   const isEdit = Boolean(id);
   const navigate = useNavigate();
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   const [code, setCode] = useState('');
   const [nameBn, setNameBn] = useState('');

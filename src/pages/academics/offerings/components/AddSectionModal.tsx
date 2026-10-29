@@ -12,7 +12,7 @@ interface Props {
 
 export const AddSectionModal: React.FC<Props> = ({ offering, onClose, onCreated }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   const [code, setCode] = useState('SEC-A');
   const [nameBn, setNameBn] = useState('শাখা ক');

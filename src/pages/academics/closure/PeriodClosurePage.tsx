@@ -12,7 +12,7 @@ import { ArrowLeft } from 'lucide-react';
 export const PeriodClosurePage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
   const { hasPermission } = useAuth();
 
   const [period, setPeriod] = useState<AcademicPeriod | null>(null);

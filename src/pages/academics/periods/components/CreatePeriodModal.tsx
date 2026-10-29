@@ -20,7 +20,7 @@ export const CreatePeriodModal: React.FC<Props> = ({
   onCreated,
 }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
   const isSession = program.scheme === 'SESSION_BASED';
 
   const [label, setLabel] = useState('');

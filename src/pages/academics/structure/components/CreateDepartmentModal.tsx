@@ -11,7 +11,7 @@ interface Props {
 
 export const CreateDepartmentModal: React.FC<Props> = ({ isOpen, onClose, onCreated }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   const [code, setCode] = useState('');
   const [nameBn, setNameBn] = useState('');

@@ -8,7 +8,7 @@ import { Copy, Check } from 'lucide-react';
 
 export const CreateUserPage: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
   const navigate = useNavigate();
 
   const [nameBn, setNameBn] = useState('');

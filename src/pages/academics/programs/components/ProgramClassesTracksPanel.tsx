@@ -20,7 +20,7 @@ export const ProgramClassesTracksPanel: React.FC<Props> = ({
   onReload,
 }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   const [clsCode, setClsCode] = useState('');
   const [clsNameBn, setClsNameBn] = useState('');

@@ -8,7 +8,7 @@ interface Props {
 
 export const PeriodStatusChip: React.FC<Props> = ({ state }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   const getStyleAndLabel = () => {
     switch (state) {

@@ -18,7 +18,7 @@ import { Lock } from 'lucide-react';
 
 export const OfferingsSectionsPage: React.FC = () => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
   const { hasPermission } = useAuth();
   const [searchParams] = useSearchParams();
 
@@ -60,11 +60,13 @@ export const OfferingsSectionsPage: React.FC = () => {
       setPeriods(periodData);
       setClasses(clsData);
       setTracks(trkData);
-      if (
-        periodData.length > 0 &&
-        (!selectedPeriodId || !periodData.some((p) => p.id === selectedPeriodId))
-      ) {
-        setSelectedPeriodId(periodData[0].id);
+      if (periodData.length > 0) {
+        if (!selectedPeriodId || !periodData.some((p) => p.id === selectedPeriodId)) {
+          setSelectedPeriodId(periodData[0].id);
+        }
+      } else {
+        setSelectedPeriodId(null);
+        setOfferings([]);
       }
     });
   }, [selectedProgramId]);
