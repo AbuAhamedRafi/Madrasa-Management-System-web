@@ -15,7 +15,7 @@ export const UserPermissionEditCard: React.FC<Props> = ({
   isSubmitting,
 }) => {
   const { i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
 
   const [permissions, setPermissions] = useState<string[]>(currentPermissions);
 

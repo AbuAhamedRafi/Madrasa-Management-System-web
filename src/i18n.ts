@@ -8,6 +8,7 @@ const savedLocale = localStorage.getItem('mms_locale') || 'bn-BD';
 i18n.use(initReactI18next).init({
   resources: {
     'bn-BD': { translation: bn },
+    'bn': { translation: bn },
     'en': { translation: en },
   },
   lng: savedLocale,
@@ -18,4 +19,3 @@ i18n.use(initReactI18next).init({
 });
 
 export default i18n;
-

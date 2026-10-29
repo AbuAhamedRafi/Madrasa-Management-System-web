@@ -8,7 +8,7 @@ import { Check, Download, Shield, Key } from 'lucide-react';
 
 export const RolesPage: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const isBn = i18n.language === 'bn';
+  const isBn = i18n.language.startsWith('bn');
   const queryClient = useQueryClient();
 
   const [showRoleModal, setShowRoleModal] = useState(false);
