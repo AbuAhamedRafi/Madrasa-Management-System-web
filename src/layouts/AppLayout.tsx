@@ -3,17 +3,35 @@ import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
-import { LayoutDashboard, Users, ShieldCheck, Settings, LogOut } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Users,
+  ShieldCheck,
+  Settings,
+  LogOut,
+  GraduationCap,
+  Network,
+  CalendarRange,
+  Layers,
+  Building2,
+} from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
   const { user, logout } = useAuth();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+      isActive
+        ? 'bg-[#1E5266] text-white font-semibold'
+        : 'text-slate-300 hover:bg-white/5 hover:text-white'
+    }`;
+
   return (
     <div className="flex h-screen bg-[#F4F7FB] overflow-hidden">
       {/* Sidebar - Matching #10364A */}
-      <aside className="w-64 bg-[#10364A] text-white flex flex-col justify-between shrink-0 shadow-xl">
+      <aside className="w-64 bg-[#10364A] text-white flex flex-col justify-between shrink-0 shadow-xl overflow-y-auto">
         <div>
           {/* Logo Brand Header - Clickable Link to Dashboard */}
           <Link
@@ -31,9 +49,7 @@ export const AppLayout: React.FC = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                {/* Madrasa Arch Silhouette */}
                 <path d="M12 3C7.5 6 5 9.5 5 15v6h14v-6c0-5.5-2.5-9-7-12z" />
-                {/* Open Book Emblem */}
                 <path
                   d="M12 14c-1.5-.75-3-.75-4 0v4c1-.75 2.5-.75 4 0 1.5-.75 3-.75 4 0v-4c-1-.75-2.5-.75-4 0z"
                   fill="currentColor"
@@ -53,70 +69,89 @@ export const AppLayout: React.FC = () => {
           </Link>
 
           {/* Navigation Workspace */}
-          <div className="px-4 py-5">
-            <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-3">
-              Workspace
+          <div className="px-4 py-4 space-y-5">
+            <div>
+              <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                Workspace
+              </div>
+              <nav className="space-y-1">
+                <NavLink to="/app" end className={navLinkClass}>
+                  <LayoutDashboard className="w-4 h-4 text-teal-400" />
+                  <span>{t('nav_dashboard')}</span>
+                </NavLink>
+              </nav>
             </div>
-            <nav className="space-y-1.5">
-              <NavLink
-                to="/app"
-                end
-                className={({ isActive }) =>
-                  `flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    isActive ? 'bg-[#1E5266] text-white font-semibold' : 'text-slate-300 hover:bg-white/5 hover:text-white'
-                  }`
-                }
-              >
-                <LayoutDashboard className="w-4 h-4 text-teal-400" />
-                <span>{t('nav_dashboard')}</span>
-              </NavLink>
 
-              {user?.permissions?.includes('users.read') && (
-                <NavLink
-                  to="/app/admin/users"
-                  className={({ isActive }) =>
-                    `flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                      isActive ? 'bg-[#1E5266] text-white font-semibold' : 'text-slate-300 hover:bg-white/5 hover:text-white'
-                    }`
-                  }
-                >
-                  <Users className="w-4 h-4 text-teal-400" />
-                  <span>{t('nav_users')}</span>
+            {user?.permissions?.includes('academics.read') && (
+              <div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                  Academics (D02)
+                </div>
+                <nav className="space-y-1">
+                  <NavLink to="/app/academics" end className={navLinkClass}>
+                    <GraduationCap className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_academics')}</span>
+                  </NavLink>
+                  <NavLink to="/app/academics/structure" className={navLinkClass}>
+                    <Network className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_hierarchy')}</span>
+                  </NavLink>
+                  <NavLink to="/app/academics/periods" className={navLinkClass}>
+                    <CalendarRange className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_periods')}</span>
+                  </NavLink>
+                  <NavLink to="/app/academics/offerings" className={navLinkClass}>
+                    <Layers className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_offerings')}</span>
+                  </NavLink>
+                </nav>
+              </div>
+            )}
+
+            <div>
+              <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                Administration
+              </div>
+              <nav className="space-y-1">
+                {user?.permissions?.includes('institution.read') && (
+                  <NavLink to="/app/admin/institution" className={navLinkClass}>
+                    <Building2 className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_institution')}</span>
+                  </NavLink>
+                )}
+
+                {user?.permissions?.includes('users.read') && (
+                  <NavLink to="/app/admin/users" className={navLinkClass}>
+                    <Users className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_users')}</span>
+                  </NavLink>
+                )}
+
+                {user?.permissions?.includes('roles.read') && (
+                  <NavLink to="/app/admin/roles" className={navLinkClass}>
+                    <ShieldCheck className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_roles')}</span>
+                  </NavLink>
+                )}
+
+                <NavLink to="/app/profile" className={navLinkClass}>
+                  <Settings className="w-4 h-4 text-teal-400" />
+                  <span>{t('nav_settings')}</span>
                 </NavLink>
-              )}
-
-              {user?.permissions?.includes('roles.read') && (
-                <NavLink
-                  to="/app/admin/roles"
-                  className={({ isActive }) =>
-                    `flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                      isActive ? 'bg-[#1E5266] text-white font-semibold' : 'text-slate-300 hover:bg-white/5 hover:text-white'
-                    }`
-                  }
-                >
-                  <ShieldCheck className="w-4 h-4 text-teal-400" />
-                  <span>{t('nav_roles')}</span>
-                </NavLink>
-              )}
-
-              <NavLink
-                to="/app/profile"
-                className={({ isActive }) =>
-                  `flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    isActive ? 'bg-[#1E5266] text-white font-semibold' : 'text-slate-300 hover:bg-white/5 hover:text-white'
-                  }`
-                }
-              >
-                <Settings className="w-4 h-4 text-teal-400" />
-                <span>{t('nav_settings')}</span>
-              </NavLink>
-            </nav>
+              </nav>
+            </div>
           </div>
         </div>
 
         {/* Sidebar Bottom Footer matching #10364A design */}
         <div className="p-4 border-t border-white/10 space-y-2">
-          {/* Dedicated Logout Button */}
+          <div className="px-3 pt-1 flex items-center justify-between text-[11px] text-slate-400 border-t border-white/5">
+            <span className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>MMS v1.0</span>
+            </span>
+            <span className="font-mono text-[10px] text-slate-400">Secure</span>
+          </div>
           <button
             type="button"
             onClick={() => logout()}
@@ -125,21 +160,11 @@ export const AppLayout: React.FC = () => {
             <LogOut className="w-4 h-4 text-slate-400 group-hover:text-rose-400 transition-colors" />
             <span className="font-medium">{t('nav_logout')}</span>
           </button>
-
-          {/* Institutional Security & Session Badge */}
-          <div className="px-3 pt-1 flex items-center justify-between text-[11px] text-slate-400 border-t border-white/5">
-            <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>MMS v1.0</span>
-            </span>
-            <span className="font-mono text-[10px] text-slate-400">Secure</span>
-          </div>
         </div>
       </aside>
 
       {/* Main Content Canvas */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        {/* Top Header Bar */}
         <header className="h-16 bg-white border-b border-slate-200 px-8 flex items-center justify-between shrink-0 shadow-xs">
           <div className="text-xs text-slate-500 font-medium">
             MMS Platform / Workspace
@@ -148,7 +173,6 @@ export const AppLayout: React.FC = () => {
           <div className="flex items-center space-x-5">
             <LanguageSwitcher />
 
-            {/* User Profile Avatar Pill */}
             <div
               onClick={() => navigate('/app/profile')}
               className="flex items-center space-x-2.5 cursor-pointer hover:opacity-85 transition-opacity"
@@ -163,7 +187,6 @@ export const AppLayout: React.FC = () => {
           </div>
         </header>
 
-        {/* Page Content Viewport */}
         <main className="p-8">
           <Outlet />
         </main>
@@ -171,4 +194,3 @@ export const AppLayout: React.FC = () => {
     </div>
   );
 };
-
