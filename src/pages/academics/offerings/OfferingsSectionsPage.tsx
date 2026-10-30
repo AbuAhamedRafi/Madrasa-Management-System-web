@@ -38,6 +38,7 @@ export const OfferingsSectionsPage: React.FC = () => {
   const [activeOfferingForSection, setActiveOfferingForSection] =
     useState<AcademicOffering | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const canManageOfferings = hasPermission('academics.manage_offerings');
 
@@ -52,23 +53,35 @@ export const OfferingsSectionsPage: React.FC = () => {
 
   useEffect(() => {
     if (!selectedProgramId) return;
+    setLoading(true);
+    setPeriods([]);
+    setClasses([]);
+    setTracks([]);
+    setOfferings([]);
+    setSelectedPeriodId(null);
+
     Promise.all([
       academicsApi.getPeriods({ program_id: selectedProgramId }),
       academicsApi.getClasses(selectedProgramId),
       academicsApi.getTracks(selectedProgramId),
-    ]).then(([periodData, clsData, trkData]) => {
-      setPeriods(periodData);
-      setClasses(clsData);
-      setTracks(trkData);
-      if (periodData.length > 0) {
-        if (!selectedPeriodId || !periodData.some((p) => p.id === selectedPeriodId)) {
+    ])
+      .then(([periodData, clsData, trkData]) => {
+        setPeriods(periodData);
+        setClasses(clsData);
+        setTracks(trkData);
+        if (periodData.length > 0) {
           setSelectedPeriodId(periodData[0].id);
+        } else {
+          setSelectedPeriodId(null);
+          setOfferings([]);
         }
-      } else {
-        setSelectedPeriodId(null);
-        setOfferings([]);
-      }
-    });
+      })
+      .catch((err: any) => {
+        setError(err?.response?.data?.error?.message || 'Failed to load program data.');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [selectedProgramId]);
 
   const loadOfferings = async () => {
@@ -76,12 +89,20 @@ export const OfferingsSectionsPage: React.FC = () => {
       setOfferings([]);
       return;
     }
-    const data = await academicsApi.getOfferings(selectedPeriodId);
-    setOfferings(data);
+    try {
+      const data = await academicsApi.getOfferings(selectedPeriodId);
+      setOfferings(data);
+    } catch {
+      setOfferings([]);
+    }
   };
 
   useEffect(() => {
-    loadOfferings();
+    if (selectedPeriodId) {
+      loadOfferings();
+    } else {
+      setOfferings([]);
+    }
   }, [selectedPeriodId]);
 
   const selectedPeriod = periods.find((p) => p.id === selectedPeriodId) || null;
@@ -150,14 +171,23 @@ export const OfferingsSectionsPage: React.FC = () => {
           </label>
           <select
             value={selectedPeriodId ?? ''}
-            onChange={(e) => setSelectedPeriodId(Number(e.target.value))}
-            className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium"
+            onChange={(e) =>
+              setSelectedPeriodId(e.target.value ? Number(e.target.value) : null)
+            }
+            disabled={periods.length === 0 || loading}
+            className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium disabled:bg-slate-100 disabled:text-slate-400"
           >
-            {periods.map((pd) => (
-              <option key={pd.id} value={pd.id}>
-                {pd.label} ({pd.state})
+            {periods.length === 0 ? (
+              <option value="">
+                {isBn ? '-- কোনো শিক্ষাবর্ষ নেই --' : '-- No Study Periods --'}
               </option>
-            ))}
+            ) : (
+              periods.map((pd) => (
+                <option key={pd.id} value={pd.id}>
+                  {pd.label} ({pd.state})
+                </option>
+              ))
+            )}
           </select>
         </div>
 

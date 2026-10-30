@@ -24,6 +24,13 @@ import { GuardianManagementPage } from './pages/students/guardians/GuardianManag
 import { StudentDocumentsPage } from './pages/students/documents/StudentDocumentsPage';
 import { AcademicHistoryHandoffPage } from './pages/students/history/AcademicHistoryHandoffPage';
 import { AdminDuplicateReviewQueuePage } from './pages/students/duplicates/AdminDuplicateReviewQueuePage';
+import { AdmissionsWorkbenchPage } from './pages/admissions/AdmissionsWorkbenchPage';
+import { StudentSelectorPage } from './pages/admissions/StudentSelectorPage';
+import { NewAdmissionWizardPage } from './pages/admissions/NewAdmissionWizardPage';
+import { ReturningStudentAdmissionPage } from './pages/admissions/ReturningStudentAdmissionPage';
+import { SessionCohortProgressionPage } from './pages/admissions/SessionCohortProgressionPage';
+import { EnrollmentDetailPage } from './pages/admissions/EnrollmentDetailPage';
+import { CapacityConflictAlternativePage } from './pages/admissions/CapacityConflictAlternativePage';
 import { ProtectedRoute, PublicRoute } from './components/RouteGuards';
 
 export const router = createBrowserRouter([
@@ -136,6 +143,50 @@ export const router = createBrowserRouter([
             element: <ProtectedRoute requiredPermission="students.review_duplicates" />,
             children: [
               { index: true, element: <AdminDuplicateReviewQueuePage /> },
+            ],
+          },
+          // D04: Admissions, Re-Admission & Enrollment Management
+          {
+            path: 'admissions',
+            element: <ProtectedRoute requiredPermission="admissions.read" />,
+            children: [
+              { index: true, element: <AdmissionsWorkbenchPage /> },
+              { path: 'capacity-review', element: <CapacityConflictAlternativePage /> },
+            ],
+          },
+          {
+            path: 'admissions/new/student',
+            element: <ProtectedRoute requiredPermission="admissions.create" />,
+            children: [
+              { index: true, element: <StudentSelectorPage /> },
+            ],
+          },
+          {
+            path: 'admissions/new/academic',
+            element: <ProtectedRoute requiredPermission="admissions.create" />,
+            children: [
+              { index: true, element: <NewAdmissionWizardPage /> },
+            ],
+          },
+          {
+            path: 'admissions/returning/:studentId',
+            element: <ProtectedRoute requiredPermission="admissions.create" />,
+            children: [
+              { index: true, element: <ReturningStudentAdmissionPage /> },
+            ],
+          },
+          {
+            path: 'admissions/session/:studentId',
+            element: <ProtectedRoute requiredPermission="admissions.create" />,
+            children: [
+              { index: true, element: <SessionCohortProgressionPage /> },
+            ],
+          },
+          {
+            path: 'enrollments/:id',
+            element: <ProtectedRoute requiredPermission="admissions.read" />,
+            children: [
+              { index: true, element: <EnrollmentDetailPage /> },
             ],
           },
           // D01: User & Role Management

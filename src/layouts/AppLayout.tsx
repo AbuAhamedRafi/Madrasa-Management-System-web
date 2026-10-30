@@ -17,6 +17,8 @@ import {
   FolderTree,
   Contact,
   ShieldAlert,
+  ClipboardList,
+  UserPlus,
 } from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
@@ -130,6 +132,26 @@ export const AppLayout: React.FC = () => {
                     <NavLink to="/app/admin/student-duplicates" className={navLinkClass}>
                       <ShieldAlert className="w-4 h-4 text-teal-400" />
                       <span>{t('nav_student_duplicates')}</span>
+                    </NavLink>
+                  )}
+                </nav>
+              </div>
+            )}
+
+            {user?.permissions?.includes('admissions.read') && (
+              <div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                  {t('section_admissions')}
+                </div>
+                <nav className="space-y-1">
+                  <NavLink to="/app/admissions" end className={navLinkClass}>
+                    <ClipboardList className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_admissions_workbench')}</span>
+                  </NavLink>
+                  {user?.permissions?.includes('admissions.create') && (
+                    <NavLink to="/app/admissions/new/student" className={navLinkClass}>
+                      <UserPlus className="w-4 h-4 text-teal-400" />
+                      <span>{t('nav_admissions_new')}</span>
                     </NavLink>
                   )}
                 </nav>
