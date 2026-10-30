@@ -127,3 +127,4 @@ export const CancelRejectModal: React.FC<Props> = ({ enrollment, mode, onClose, 
     </div>
   );
 };
+

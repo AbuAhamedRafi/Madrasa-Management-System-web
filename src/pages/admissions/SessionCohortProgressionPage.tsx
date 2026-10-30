@@ -329,3 +329,4 @@ export const SessionCohortProgressionPage: React.FC = () => {
     </div>
   );
 };
+

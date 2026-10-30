@@ -58,3 +58,4 @@ export const AdmissionStatusChip: React.FC<Props> = ({ status, size = 'sm' }) =>
     </span>
   );
 };
+

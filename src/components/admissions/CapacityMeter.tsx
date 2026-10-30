@@ -46,3 +46,4 @@ export const CapacityMeter: React.FC<Props> = ({ capacity, showLabels = true }) 
     </div>
   );
 };
+

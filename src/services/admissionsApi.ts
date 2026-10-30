@@ -124,3 +124,4 @@ export const admissionsApi = {
     return res.data.data;
   },
 };
+

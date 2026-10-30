@@ -185,3 +185,4 @@ export const ReallocateSectionModal: React.FC<Props> = ({ enrollment, onClose, o
     </div>
   );
 };
+

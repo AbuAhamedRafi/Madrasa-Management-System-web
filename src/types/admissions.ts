@@ -236,3 +236,4 @@ export interface SessionProgressionContext {
   past_enrollments?: Enrollment[];
   next_period?: any;
 }
+
