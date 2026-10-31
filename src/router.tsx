@@ -36,6 +36,14 @@ import { IndividualPromotionPage } from './pages/promotions/IndividualPromotionP
 import { NewBulkBatchPage } from './pages/promotions/NewBulkBatchPage';
 import { BatchDetailPage } from './pages/promotions/BatchDetailPage';
 import { BatchAuditPage } from './pages/promotions/BatchAuditPage';
+import { BillingDashboardPage } from './pages/billing/BillingDashboardPage';
+import { FeeCategoriesPage } from './pages/billing/FeeCategoriesPage';
+import { FeeStructureEditorPage } from './pages/billing/FeeStructureEditorPage';
+import { BillingRunWizardPage } from './pages/billing/BillingRunWizardPage';
+import { InvoiceDetailPage } from './pages/billing/InvoiceDetailPage';
+import { InstallmentScheduleBuilderPage } from './pages/billing/InstallmentScheduleBuilderPage';
+import { WaiverApprovalQueuePage } from './pages/billing/WaiverApprovalQueuePage';
+import { StudentBillingLedgerPage } from './pages/billing/StudentBillingLedgerPage';
 import { ProtectedRoute, PublicRoute } from './components/RouteGuards';
 
 export const router = createBrowserRouter([
@@ -222,6 +230,28 @@ export const router = createBrowserRouter([
             element: <ProtectedRoute requiredPermission="promotions.audit.read" />,
             children: [
               { index: true, element: <BatchAuditPage /> },
+            ],
+          },
+          // D06: Fee Structures, Billing & Invoice Management Routes
+          {
+            path: 'billing',
+            element: <ProtectedRoute requiredPermission="billing.read" />,
+            children: [
+              { index: true, element: <BillingDashboardPage /> },
+              { path: 'categories', element: <FeeCategoriesPage /> },
+              { path: 'fee-structures/new', element: <FeeStructureEditorPage /> },
+              { path: 'fee-structures/:id', element: <FeeStructureEditorPage /> },
+              { path: 'runs/new', element: <BillingRunWizardPage /> },
+              { path: 'invoices/:id', element: <InvoiceDetailPage /> },
+              { path: 'invoices/:id/installments', element: <InstallmentScheduleBuilderPage /> },
+              { path: 'adjustments', element: <WaiverApprovalQueuePage /> },
+            ],
+          },
+          {
+            path: 'students/:id/billing-ledger',
+            element: <ProtectedRoute requiredPermission="billing.invoices.read" />,
+            children: [
+              { index: true, element: <StudentBillingLedgerPage /> },
             ],
           },
           // D01: User & Role Management

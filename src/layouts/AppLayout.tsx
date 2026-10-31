@@ -21,6 +21,10 @@ import {
   UserPlus,
   TrendingUp,
   UserCheck,
+  Receipt,
+  Tag,
+  PlayCircle,
+  Percent,
 } from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
@@ -174,6 +178,38 @@ export const AppLayout: React.FC = () => {
                     <NavLink to="/app/promotions/individual" className={navLinkClass}>
                       <UserCheck className="w-4 h-4 text-teal-400" />
                       <span>{t('nav_individual_promotion')}</span>
+                    </NavLink>
+                  )}
+                </nav>
+              </div>
+            )}
+
+            {user?.permissions?.includes('billing.read') && (
+              <div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                  {isBn ? 'বিলিং ও ফি' : 'Billing & Fees'}
+                </div>
+                <nav className="space-y-1">
+                  <NavLink to="/app/billing" end className={navLinkClass}>
+                    <Receipt className="w-4 h-4 text-teal-400" />
+                    <span>{isBn ? 'বিলিং ড্যাশবোর্ড' : 'Billing Overview'}</span>
+                  </NavLink>
+                  {user?.permissions?.includes('billing.config.read') && (
+                    <NavLink to="/app/billing/categories" className={navLinkClass}>
+                      <Tag className="w-4 h-4 text-teal-400" />
+                      <span>{isBn ? 'ফি খাতসমূহ' : 'Fee Categories'}</span>
+                    </NavLink>
+                  )}
+                  {user?.permissions?.includes('billing.runs.create') && (
+                    <NavLink to="/app/billing/runs/new" className={navLinkClass}>
+                      <PlayCircle className="w-4 h-4 text-teal-400" />
+                      <span>{isBn ? 'মাসিক বিলিং রান' : 'Billing Runs'}</span>
+                    </NavLink>
+                  )}
+                  {user?.permissions?.includes('billing.adjustments.read') && (
+                    <NavLink to="/app/billing/adjustments" className={navLinkClass}>
+                      <Percent className="w-4 h-4 text-teal-400" />
+                      <span>{isBn ? 'ছাড় ও মওকুফ' : 'Waivers & Discounts'}</span>
                     </NavLink>
                   )}
                 </nav>
