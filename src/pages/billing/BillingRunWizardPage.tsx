@@ -31,7 +31,7 @@ export const BillingRunWizardPage: React.FC = () => {
   const [runType, setRunType] = useState<BillingRunType>('MONTHLY_TUITION');
   const [billingMonth, setBillingMonth] = useState('2026-10');
   const [dueDate, setDueDate] = useState('2026-10-15');
-  const [notes, setNotes] = useState('');
+  const [notes] = useState('');
 
   const [previewData, setPreviewData] = useState<any | null>(null);
   const [activeRun, setActiveRun] = useState<BillingRun | null>(null);

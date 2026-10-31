@@ -339,3 +339,4 @@ export const InstallmentScheduleBuilderPage: React.FC = () => {
     </div>
   );
 };
+

@@ -504,3 +504,4 @@ export const FeeCategoriesPage: React.FC = () => {
     </div>
   );
 };
+

@@ -40,7 +40,7 @@ export const FeeStructureEditorPage: React.FC = () => {
   const [notes, setNotes] = useState('');
   const [items, setItems] = useState<FeeStructureItem[]>([]);
 
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
