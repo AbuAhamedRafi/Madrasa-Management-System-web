@@ -15,6 +15,12 @@ import {
   Layers,
   Building2,
   FolderTree,
+  Contact,
+  ShieldAlert,
+  ClipboardList,
+  UserPlus,
+  TrendingUp,
+  UserCheck,
 } from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
@@ -110,6 +116,66 @@ export const AppLayout: React.FC = () => {
                     <Layers className="w-4 h-4 text-teal-400" />
                     <span>{t('nav_offerings')}</span>
                   </NavLink>
+                </nav>
+              </div>
+            )}
+
+            {user?.permissions?.includes('students.read') && (
+              <div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                  {t('section_students')}
+                </div>
+                <nav className="space-y-1">
+                  <NavLink to="/app/students" className={navLinkClass}>
+                    <Contact className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_students')}</span>
+                  </NavLink>
+                  {user?.permissions?.includes('students.review_duplicates') && (
+                    <NavLink to="/app/admin/student-duplicates" className={navLinkClass}>
+                      <ShieldAlert className="w-4 h-4 text-teal-400" />
+                      <span>{t('nav_student_duplicates')}</span>
+                    </NavLink>
+                  )}
+                </nav>
+              </div>
+            )}
+
+            {user?.permissions?.includes('admissions.read') && (
+              <div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                  {t('section_admissions')}
+                </div>
+                <nav className="space-y-1">
+                  <NavLink to="/app/admissions" end className={navLinkClass}>
+                    <ClipboardList className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_admissions_workbench')}</span>
+                  </NavLink>
+                  {user?.permissions?.includes('admissions.create') && (
+                    <NavLink to="/app/admissions/new/student" className={navLinkClass}>
+                      <UserPlus className="w-4 h-4 text-teal-400" />
+                      <span>{t('nav_admissions_new')}</span>
+                    </NavLink>
+                  )}
+                </nav>
+              </div>
+            )}
+
+            {user?.permissions?.includes('promotions.read') && (
+              <div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                  {t('section_promotions')}
+                </div>
+                <nav className="space-y-1">
+                  <NavLink to="/app/promotions" end className={navLinkClass}>
+                    <TrendingUp className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_promotions_dashboard')}</span>
+                  </NavLink>
+                  {user?.permissions?.includes('promotions.individual.create') && (
+                    <NavLink to="/app/promotions/individual" className={navLinkClass}>
+                      <UserCheck className="w-4 h-4 text-teal-400" />
+                      <span>{t('nav_individual_promotion')}</span>
+                    </NavLink>
+                  )}
                 </nav>
               </div>
             )}

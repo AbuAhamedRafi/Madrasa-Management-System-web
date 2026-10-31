@@ -16,6 +16,26 @@ import { CohortPeriodsPage } from './pages/academics/periods/CohortPeriodsPage';
 import { OfferingsSectionsPage } from './pages/academics/offerings/OfferingsSectionsPage';
 import { PeriodClosurePage } from './pages/academics/closure/PeriodClosurePage';
 import { InstitutionSettingsPage } from './pages/institution/InstitutionSettingsPage';
+import { StudentDirectoryPage } from './pages/students/directory/StudentDirectoryPage';
+import { NewStudentWizardPage } from './pages/students/registration/NewStudentWizardPage';
+import { StudentProfilePage } from './pages/students/profile/StudentProfilePage';
+import { StudentEditPage } from './pages/students/profile/StudentEditPage';
+import { GuardianManagementPage } from './pages/students/guardians/GuardianManagementPage';
+import { StudentDocumentsPage } from './pages/students/documents/StudentDocumentsPage';
+import { AcademicHistoryHandoffPage } from './pages/students/history/AcademicHistoryHandoffPage';
+import { AdminDuplicateReviewQueuePage } from './pages/students/duplicates/AdminDuplicateReviewQueuePage';
+import { AdmissionsWorkbenchPage } from './pages/admissions/AdmissionsWorkbenchPage';
+import { StudentSelectorPage } from './pages/admissions/StudentSelectorPage';
+import { NewAdmissionWizardPage } from './pages/admissions/NewAdmissionWizardPage';
+import { ReturningStudentAdmissionPage } from './pages/admissions/ReturningStudentAdmissionPage';
+import { SessionCohortProgressionPage } from './pages/admissions/SessionCohortProgressionPage';
+import { EnrollmentDetailPage } from './pages/admissions/EnrollmentDetailPage';
+import { CapacityConflictAlternativePage } from './pages/admissions/CapacityConflictAlternativePage';
+import { PromotionDashboardPage } from './pages/promotions/PromotionDashboardPage';
+import { IndividualPromotionPage } from './pages/promotions/IndividualPromotionPage';
+import { NewBulkBatchPage } from './pages/promotions/NewBulkBatchPage';
+import { BatchDetailPage } from './pages/promotions/BatchDetailPage';
+import { BatchAuditPage } from './pages/promotions/BatchAuditPage';
 import { ProtectedRoute, PublicRoute } from './components/RouteGuards';
 
 export const router = createBrowserRouter([
@@ -83,6 +103,125 @@ export const router = createBrowserRouter([
             element: <ProtectedRoute requiredPermission="institution.read" />,
             children: [
               { index: true, element: <InstitutionSettingsPage /> },
+            ],
+          },
+          // D03: Student & Guardian Management Routes
+          {
+            path: 'students',
+            element: <ProtectedRoute requiredPermission="students.read" />,
+            children: [
+              { index: true, element: <StudentDirectoryPage /> },
+              { path: ':id', element: <StudentProfilePage /> },
+              { path: ':id/history', element: <AcademicHistoryHandoffPage /> },
+            ],
+          },
+          {
+            path: 'students/new',
+            element: <ProtectedRoute requiredPermission="students.create" />,
+            children: [
+              { index: true, element: <NewStudentWizardPage /> },
+            ],
+          },
+          {
+            path: 'students/:id/edit',
+            element: <ProtectedRoute requiredPermission="students.update" />,
+            children: [
+              { index: true, element: <StudentEditPage /> },
+            ],
+          },
+          {
+            path: 'students/:id/guardians',
+            element: <ProtectedRoute requiredPermission="students.manage_guardians" />,
+            children: [
+              { index: true, element: <GuardianManagementPage /> },
+            ],
+          },
+          {
+            path: 'students/:id/documents',
+            element: <ProtectedRoute requiredPermission="students.manage_documents" />,
+            children: [
+              { index: true, element: <StudentDocumentsPage /> },
+            ],
+          },
+          {
+            path: 'admin/student-duplicates',
+            element: <ProtectedRoute requiredPermission="students.review_duplicates" />,
+            children: [
+              { index: true, element: <AdminDuplicateReviewQueuePage /> },
+            ],
+          },
+          // D04: Admissions, Re-Admission & Enrollment Management
+          {
+            path: 'admissions',
+            element: <ProtectedRoute requiredPermission="admissions.read" />,
+            children: [
+              { index: true, element: <AdmissionsWorkbenchPage /> },
+              { path: 'capacity-review', element: <CapacityConflictAlternativePage /> },
+            ],
+          },
+          {
+            path: 'admissions/new/student',
+            element: <ProtectedRoute requiredPermission="admissions.create" />,
+            children: [
+              { index: true, element: <StudentSelectorPage /> },
+            ],
+          },
+          {
+            path: 'admissions/new/academic',
+            element: <ProtectedRoute requiredPermission="admissions.create" />,
+            children: [
+              { index: true, element: <NewAdmissionWizardPage /> },
+            ],
+          },
+          {
+            path: 'admissions/returning/:studentId',
+            element: <ProtectedRoute requiredPermission="admissions.create" />,
+            children: [
+              { index: true, element: <ReturningStudentAdmissionPage /> },
+            ],
+          },
+          {
+            path: 'admissions/session/:studentId',
+            element: <ProtectedRoute requiredPermission="admissions.create" />,
+            children: [
+              { index: true, element: <SessionCohortProgressionPage /> },
+            ],
+          },
+          {
+            path: 'enrollments/:id',
+            element: <ProtectedRoute requiredPermission="admissions.read" />,
+            children: [
+              { index: true, element: <EnrollmentDetailPage /> },
+            ],
+          },
+          // D05: Individual & Bulk Student Promotion Routes
+          {
+            path: 'promotions',
+            element: <ProtectedRoute requiredPermission="promotions.read" />,
+            children: [
+              { index: true, element: <PromotionDashboardPage /> },
+              { path: 'batches/:id', element: <BatchDetailPage /> },
+            ],
+          },
+          {
+            path: 'promotions/individual',
+            element: <ProtectedRoute requiredPermission="promotions.individual.create" />,
+            children: [
+              { index: true, element: <IndividualPromotionPage /> },
+            ],
+          },
+          {
+            path: 'promotions/batches/new',
+            element: <ProtectedRoute requiredPermission="promotions.batches.create" />,
+            children: [
+              { index: true, element: <NewBulkBatchPage /> },
+            ],
+          },
+          {
+            path: 'promotions/batches/:id/audit',
+            element: <ProtectedRoute requiredPermission="promotions.audit.read" />,
+            children: [
+              { index: true, element: <BatchAuditPage /> },
             ],
           },
           // D01: User & Role Management
