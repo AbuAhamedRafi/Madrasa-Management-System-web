@@ -19,6 +19,8 @@ import {
   ShieldAlert,
   ClipboardList,
   UserPlus,
+  TrendingUp,
+  UserCheck,
 } from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
@@ -152,6 +154,26 @@ export const AppLayout: React.FC = () => {
                     <NavLink to="/app/admissions/new/student" className={navLinkClass}>
                       <UserPlus className="w-4 h-4 text-teal-400" />
                       <span>{t('nav_admissions_new')}</span>
+                    </NavLink>
+                  )}
+                </nav>
+              </div>
+            )}
+
+            {user?.permissions?.includes('promotions.read') && (
+              <div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                  {t('section_promotions')}
+                </div>
+                <nav className="space-y-1">
+                  <NavLink to="/app/promotions" end className={navLinkClass}>
+                    <TrendingUp className="w-4 h-4 text-teal-400" />
+                    <span>{t('nav_promotions_dashboard')}</span>
+                  </NavLink>
+                  {user?.permissions?.includes('promotions.individual.create') && (
+                    <NavLink to="/app/promotions/individual" className={navLinkClass}>
+                      <UserCheck className="w-4 h-4 text-teal-400" />
+                      <span>{t('nav_individual_promotion')}</span>
                     </NavLink>
                   )}
                 </nav>

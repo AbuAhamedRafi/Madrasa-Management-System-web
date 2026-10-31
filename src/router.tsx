@@ -31,6 +31,11 @@ import { ReturningStudentAdmissionPage } from './pages/admissions/ReturningStude
 import { SessionCohortProgressionPage } from './pages/admissions/SessionCohortProgressionPage';
 import { EnrollmentDetailPage } from './pages/admissions/EnrollmentDetailPage';
 import { CapacityConflictAlternativePage } from './pages/admissions/CapacityConflictAlternativePage';
+import { PromotionDashboardPage } from './pages/promotions/PromotionDashboardPage';
+import { IndividualPromotionPage } from './pages/promotions/IndividualPromotionPage';
+import { NewBulkBatchPage } from './pages/promotions/NewBulkBatchPage';
+import { BatchDetailPage } from './pages/promotions/BatchDetailPage';
+import { BatchAuditPage } from './pages/promotions/BatchAuditPage';
 import { ProtectedRoute, PublicRoute } from './components/RouteGuards';
 
 export const router = createBrowserRouter([
@@ -187,6 +192,36 @@ export const router = createBrowserRouter([
             element: <ProtectedRoute requiredPermission="admissions.read" />,
             children: [
               { index: true, element: <EnrollmentDetailPage /> },
+            ],
+          },
+          // D05: Individual & Bulk Student Promotion Routes
+          {
+            path: 'promotions',
+            element: <ProtectedRoute requiredPermission="promotions.read" />,
+            children: [
+              { index: true, element: <PromotionDashboardPage /> },
+              { path: 'batches/:id', element: <BatchDetailPage /> },
+            ],
+          },
+          {
+            path: 'promotions/individual',
+            element: <ProtectedRoute requiredPermission="promotions.individual.create" />,
+            children: [
+              { index: true, element: <IndividualPromotionPage /> },
+            ],
+          },
+          {
+            path: 'promotions/batches/new',
+            element: <ProtectedRoute requiredPermission="promotions.batches.create" />,
+            children: [
+              { index: true, element: <NewBulkBatchPage /> },
+            ],
+          },
+          {
+            path: 'promotions/batches/:id/audit',
+            element: <ProtectedRoute requiredPermission="promotions.audit.read" />,
+            children: [
+              { index: true, element: <BatchAuditPage /> },
             ],
           },
           // D01: User & Role Management
