@@ -172,3 +172,4 @@ export const PaymentSlipPrintPage: React.FC = () => {
     </div>
   );
 };
+

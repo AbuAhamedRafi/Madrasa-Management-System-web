@@ -215,3 +215,4 @@ export const CashCollectionDashboardPage: React.FC = () => {
     </div>
   );
 };
+

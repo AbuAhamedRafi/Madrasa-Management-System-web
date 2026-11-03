@@ -131,3 +131,4 @@ export const StudentPaymentsLedgerPage: React.FC = () => {
     </div>
   );
 };
+

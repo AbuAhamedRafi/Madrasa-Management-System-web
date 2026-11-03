@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { paymentsApi } from '../../services/paymentsApi';
-import type { PaymentReceipt } from '../../types/payments';
 
 export const PaymentReceiptPrintPage: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Payment ID or Receipt ID
@@ -248,3 +247,4 @@ export const PaymentReceiptPrintPage: React.FC = () => {
     </div>
   );
 };
+

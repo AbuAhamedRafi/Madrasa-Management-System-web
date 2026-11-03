@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { paymentsApi } from '../../services/paymentsApi';
 import { billingApi } from '../../services/billingApi';
-import type { InvoiceDetail } from '../../types/billing';
+import type { Invoice } from '../../types/billing';
 
 export const PaymentSlipIssuePage: React.FC = () => {
   const navigate = useNavigate();
   const [invoiceIdInput, setInvoiceIdInput] = useState('');
-  const [invoice, setInvoice] = useState<InvoiceDetail | null>(null);
+  const [invoice, setInvoice] = useState<Invoice | null>(null);
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +24,7 @@ export const PaymentSlipIssuePage: React.FC = () => {
       setError(null);
       const res = await billingApi.getInvoice(parseInt(invoiceIdInput.trim(), 10));
       setInvoice(res);
-      setSlipAmount(res.balance_amount);
+      setSlipAmount(res.net_payable_amount);
     } catch (err: any) {
       setError(err?.response?.data?.error?.message || 'ইনভয়েস খুঁজে পাওয়া যায়নি।');
       setInvoice(null);
@@ -94,14 +94,14 @@ export const PaymentSlipIssuePage: React.FC = () => {
                   ইনভয়েস নং: {invoice.invoice_number}
                 </span>
                 <h3 className="text-lg font-bold text-gray-900 mt-2">
-                  {invoice.student?.name_bn || invoice.student?.name_en}
+                  {invoice.student?.full_name_bn || invoice.student?.full_name_en}
                 </h3>
-                <p className="text-xs text-gray-500 font-mono">আইডি: {invoice.student?.student_code}</p>
+                <p className="text-xs text-gray-500 font-mono">আইডি: {invoice.student?.student_id}</p>
               </div>
               <div className="text-right">
-                <p className="text-xs text-gray-500">বকেয়া পরিমাণ</p>
-                <p className="text-2xl font-bold text-amber-600 font-mono">৳{invoice.balance_amount}</p>
-                <p className="text-xs text-gray-400">মোট ধার্য: ৳{invoice.total_amount}</p>
+                <p className="text-xs text-gray-500">ধার্য পরিমাণ</p>
+                <p className="text-2xl font-bold text-amber-600 font-mono">৳{invoice.net_payable_amount}</p>
+                <p className="text-xs text-gray-400">সাবটোটাল: ৳{invoice.subtotal_amount}</p>
               </div>
             </div>
           </div>
@@ -113,29 +113,19 @@ export const PaymentSlipIssuePage: React.FC = () => {
               <table className="w-full text-left text-xs text-gray-600">
                 <thead className="bg-gray-50 font-semibold border-b">
                   <tr>
-                    <th className="px-4 py-2">খাতের নাম</th>
-                    <th className="px-4 py-2">ভর্তির শর্ত</th>
-                    <th className="px-4 py-2 text-right">ধার্য</th>
-                    <th className="px-4 py-2 text-right">পরিশোধিত</th>
-                    <th className="px-4 py-2 text-right">বকেয়া</th>
+                    <th className="px-4 py-2">খাতের বিবরণ</th>
+                    <th className="px-4 py-2 text-right">পরিমাণ</th>
+                    <th className="px-4 py-2 text-right">ছাড়</th>
+                    <th className="px-4 py-2 text-right">নেট প্রদেয়</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  {invoice.items?.map((it) => (
+                  {invoice.items?.map((it: any) => (
                     <tr key={it.id}>
-                      <td className="px-4 py-2 font-medium text-gray-900">{it.name}</td>
-                      <td className="px-4 py-2">
-                        {it.admission_required ? (
-                          <span className="px-2 py-0.5 rounded bg-red-100 text-red-700 font-semibold">
-                            ভর্তির জন্য আবশ্যক
-                          </span>
-                        ) : (
-                          <span className="text-gray-400">নিয়মিত ফি</span>
-                        )}
-                      </td>
-                      <td className="px-4 py-2 text-right font-mono">৳{it.net_amount}</td>
-                      <td className="px-4 py-2 text-right font-mono text-emerald-600">৳{it.paid_amount}</td>
-                      <td className="px-4 py-2 text-right font-mono font-bold text-amber-700">৳{it.balance_amount}</td>
+                      <td className="px-4 py-2 font-medium text-gray-900">{it.description_bn || it.description_en}</td>
+                      <td className="px-4 py-2 text-right font-mono">৳{it.gross_amount}</td>
+                      <td className="px-4 py-2 text-right font-mono text-emerald-600">৳{it.adjustment_amount}</td>
+                      <td className="px-4 py-2 text-right font-mono font-bold text-amber-700">৳{it.net_amount}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -152,13 +142,13 @@ export const PaymentSlipIssuePage: React.FC = () => {
               <input
                 type="number"
                 step="0.01"
-                max={parseFloat(invoice.balance_amount)}
+                max={parseFloat(invoice.net_payable_amount)}
                 min="0.01"
                 value={slipAmount}
                 onChange={(e) => setSlipAmount(e.target.value)}
                 className="w-full px-3 py-2 border rounded-lg text-sm font-mono"
               />
-              <p className="text-xs text-gray-400 mt-1">বকেয়া পরিমাণের বেশি স্লিপ ইস্যু করা যাবে না।</p>
+              <p className="text-xs text-gray-400 mt-1">প্রদেয় পরিমাণের বেশি স্লিপ ইস্যু করা যাবে না।</p>
             </div>
 
             <div>

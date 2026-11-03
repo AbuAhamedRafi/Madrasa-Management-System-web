@@ -1,4 +1,4 @@
-import { apiClient } from './api';
+import { apiClient } from './apiClient';
 import type {
   PaymentSlip,
   CashierShift,
@@ -154,3 +154,4 @@ export const paymentsApi = {
     return res.data.data;
   },
 };
+

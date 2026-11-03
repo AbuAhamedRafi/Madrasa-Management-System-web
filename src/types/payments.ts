@@ -223,3 +223,4 @@ export interface PaymentDashboardData {
   };
   recent_payments: Payment[];
 }
+
