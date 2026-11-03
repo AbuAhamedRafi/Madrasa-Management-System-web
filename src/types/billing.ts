@@ -1,5 +1,5 @@
-export type FeeBillingType = 'ONE_TIME' | 'RECURRING' | 'EVENT_BASED';
-export type FeeCadence = 'ONCE' | 'MONTHLY' | 'TERM' | 'ANNUAL' | 'AD_HOC';
+export type FeeBillingType = 'ONE_TIME' | 'RECURRING' | 'ADMISSION' | 'EXAM' | 'OTHER';
+export type FeeCadence = 'ONE_TIME' | 'PER_ENROLLMENT' | 'MONTHLY' | 'TERMLY' | 'ANNUAL';
 export type FeeStructureStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
 export type InvoiceStatus = 'DRAFT' | 'ISSUED' | 'VOIDED';
 export type InvoiceSourceType = 'ADMISSION' | 'PROMOTION' | 'MONTHLY_RUN' | 'MANUAL';

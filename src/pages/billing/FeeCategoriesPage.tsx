@@ -31,7 +31,7 @@ export const FeeCategoriesPage: React.FC = () => {
   const [nameBn, setNameBn] = useState('');
   const [nameEn, setNameEn] = useState('');
   const [billingType, setBillingType] = useState<FeeBillingType>('ONE_TIME');
-  const [defaultCadence, setDefaultCadence] = useState<FeeCadence>('ONCE');
+  const [defaultCadence, setDefaultCadence] = useState<FeeCadence>('ONE_TIME');
   const [isMandatoryDefault, setIsMandatoryDefault] = useState(true);
   const [sortOrder, setSortOrder] = useState(10);
   const [errorMsg, setErrorMsg] = useState('');
@@ -63,7 +63,7 @@ export const FeeCategoriesPage: React.FC = () => {
     setNameBn('');
     setNameEn('');
     setBillingType('ONE_TIME');
-    setDefaultCadence('ONCE');
+    setDefaultCadence('ONE_TIME');
     setIsMandatoryDefault(true);
     setSortOrder((categories.length + 1) * 10);
     setErrorMsg('');
@@ -252,7 +252,9 @@ export const FeeCategoriesPage: React.FC = () => {
               <option value="">{isBn ? 'সকল বিলিং ধরন' : 'All Billing Types'}</option>
               <option value="ONE_TIME">ONE_TIME</option>
               <option value="RECURRING">RECURRING</option>
-              <option value="EVENT_BASED">EVENT_BASED</option>
+              <option value="ADMISSION">ADMISSION</option>
+              <option value="EXAM">EXAM</option>
+              <option value="OTHER">OTHER</option>
             </select>
 
             <select
@@ -440,7 +442,9 @@ export const FeeCategoriesPage: React.FC = () => {
                   >
                     <option value="ONE_TIME">ONE_TIME</option>
                     <option value="RECURRING">RECURRING</option>
-                    <option value="EVENT_BASED">EVENT_BASED</option>
+                    <option value="ADMISSION">ADMISSION</option>
+                    <option value="EXAM">EXAM</option>
+                    <option value="OTHER">OTHER</option>
                   </select>
                 </div>
                 <div>
@@ -452,11 +456,11 @@ export const FeeCategoriesPage: React.FC = () => {
                     onChange={(e) => setDefaultCadence(e.target.value as FeeCadence)}
                     className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white"
                   >
-                    <option value="ONCE">ONCE</option>
+                    <option value="ONE_TIME">ONE_TIME</option>
+                    <option value="PER_ENROLLMENT">PER_ENROLLMENT</option>
                     <option value="MONTHLY">MONTHLY</option>
-                    <option value="TERM">TERM</option>
+                    <option value="TERMLY">TERMLY</option>
                     <option value="ANNUAL">ANNUAL</option>
-                    <option value="AD_HOC">AD_HOC</option>
                   </select>
                 </div>
               </div>

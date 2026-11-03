@@ -591,11 +591,11 @@ export const FeeStructureEditorPage: React.FC = () => {
                           }
                           className="px-2 py-1.5 border border-slate-200 rounded bg-white text-xs"
                         >
-                          <option value="ONCE">ONCE</option>
+                          <option value="ONE_TIME">ONE_TIME</option>
+                          <option value="PER_ENROLLMENT">PER_ENROLLMENT</option>
                           <option value="MONTHLY">MONTHLY</option>
-                          <option value="TERM">TERM</option>
+                          <option value="TERMLY">TERMLY</option>
                           <option value="ANNUAL">ANNUAL</option>
-                          <option value="AD_HOC">AD_HOC</option>
                         </select>
                       </td>
                       <td className="py-2 px-3 text-center">
