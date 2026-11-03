@@ -44,6 +44,15 @@ import { InvoiceDetailPage } from './pages/billing/InvoiceDetailPage';
 import { InstallmentScheduleBuilderPage } from './pages/billing/InstallmentScheduleBuilderPage';
 import { WaiverApprovalQueuePage } from './pages/billing/WaiverApprovalQueuePage';
 import { StudentBillingLedgerPage } from './pages/billing/StudentBillingLedgerPage';
+import { CashCollectionDashboardPage } from './pages/payments/CashCollectionDashboardPage';
+import { PaymentSlipIssuePage } from './pages/payments/PaymentSlipIssuePage';
+import { PaymentSlipPrintPage } from './pages/payments/PaymentSlipPrintPage';
+import { CashPaymentPostPage } from './pages/payments/CashPaymentPostPage';
+import { PaymentReceiptPrintPage } from './pages/payments/PaymentReceiptPrintPage';
+import { StudentPaymentsLedgerPage } from './pages/payments/StudentPaymentsLedgerPage';
+import { CashierReconciliationPage } from './pages/payments/CashierReconciliationPage';
+import { ReversalApprovalQueuePage } from './pages/payments/ReversalApprovalQueuePage';
+import { GuardianSmsOutboxPage } from './pages/payments/GuardianSmsOutboxPage';
 import { ProtectedRoute, PublicRoute } from './components/RouteGuards';
 
 export const router = createBrowserRouter([
@@ -252,6 +261,28 @@ export const router = createBrowserRouter([
             element: <ProtectedRoute requiredPermission="billing.invoices.read" />,
             children: [
               { index: true, element: <StudentBillingLedgerPage /> },
+            ],
+          },
+          // D07: Cash Collection, Payment Slips & Receipts Routes
+          {
+            path: 'payments',
+            element: <ProtectedRoute requiredPermission="payments.read" />,
+            children: [
+              { index: true, element: <CashCollectionDashboardPage /> },
+              { path: 'slips/new', element: <PaymentSlipIssuePage /> },
+              { path: 'slips/:id/print', element: <PaymentSlipPrintPage /> },
+              { path: 'collect/:slipId', element: <CashPaymentPostPage /> },
+              { path: ':id/receipt', element: <PaymentReceiptPrintPage /> },
+              { path: 'cashier-shifts', element: <CashierReconciliationPage /> },
+              { path: 'reversals', element: <ReversalApprovalQueuePage /> },
+              { path: 'notifications', element: <GuardianSmsOutboxPage /> },
+            ],
+          },
+          {
+            path: 'students/:id/payments',
+            element: <ProtectedRoute requiredPermission="payments.read" />,
+            children: [
+              { index: true, element: <StudentPaymentsLedgerPage /> },
             ],
           },
           // D01: User & Role Management

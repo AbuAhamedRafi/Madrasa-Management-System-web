@@ -216,6 +216,44 @@ export const AppLayout: React.FC = () => {
               </div>
             )}
 
+            {user?.permissions?.includes('payments.read') && (
+              <div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                  {isBn ? 'ক্যাশ কালেকশন ও রসিদ' : 'Cash & Receipts'}
+                </div>
+                <nav className="space-y-1">
+                  <NavLink to="/app/payments" end className={navLinkClass}>
+                    <Receipt className="w-4 h-4 text-emerald-400" />
+                    <span>{isBn ? 'ক্যাশ ড্যাশবোর্ড' : 'Cash Dashboard'}</span>
+                  </NavLink>
+                  {user?.permissions?.includes('payments.slips.create') && (
+                    <NavLink to="/app/payments/slips/new" className={navLinkClass}>
+                      <ClipboardList className="w-4 h-4 text-emerald-400" />
+                      <span>{isBn ? 'স্লিপ ইস্যু' : 'Issue Slip'}</span>
+                    </NavLink>
+                  )}
+                  {user?.permissions?.includes('payments.cashier.read') && (
+                    <NavLink to="/app/payments/cashier-shifts" className={navLinkClass}>
+                      <Building2 className="w-4 h-4 text-emerald-400" />
+                      <span>{isBn ? 'ক্যাশিয়ার শিফট' : 'Cashier Shifts'}</span>
+                    </NavLink>
+                  )}
+                  {user?.permissions?.includes('payments.reversals.read') && (
+                    <NavLink to="/app/payments/reversals" className={navLinkClass}>
+                      <ShieldAlert className="w-4 h-4 text-emerald-400" />
+                      <span>{isBn ? 'রিভার্সাল কিউ' : 'Reversals'}</span>
+                    </NavLink>
+                  )}
+                  {user?.permissions?.includes('payments.notifications.read') && (
+                    <NavLink to="/app/payments/notifications" className={navLinkClass}>
+                      <Tag className="w-4 h-4 text-emerald-400" />
+                      <span>{isBn ? 'এসএমএস আউটবক্স' : 'SMS Outbox'}</span>
+                    </NavLink>
+                  )}
+                </nav>
+              </div>
+            )}
+
             <div>
               <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
                 {t('section_administration')}
