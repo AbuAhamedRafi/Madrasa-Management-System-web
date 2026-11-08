@@ -53,6 +53,14 @@ import { StudentPaymentsLedgerPage } from './pages/payments/StudentPaymentsLedge
 import { CashierReconciliationPage } from './pages/payments/CashierReconciliationPage';
 import { ReversalApprovalQueuePage } from './pages/payments/ReversalApprovalQueuePage';
 import { GuardianSmsOutboxPage } from './pages/payments/GuardianSmsOutboxPage';
+import { DataExchangeDashboardPage } from './pages/data-exchange/DataExchangeDashboardPage';
+import { TemplateCatalogPage } from './pages/data-exchange/TemplateCatalogPage';
+import { ImportUploadMappingPage } from './pages/data-exchange/ImportUploadMappingPage';
+import { ImportValidationPreviewPage } from './pages/data-exchange/ImportValidationPreviewPage';
+import { ImportDuplicateReviewPage } from './pages/data-exchange/ImportDuplicateReviewPage';
+import { ImportExecutionMonitorPage } from './pages/data-exchange/ImportExecutionMonitorPage';
+import { DatasetExportBuilderPage } from './pages/data-exchange/DatasetExportBuilderPage';
+import { ExportHistoryAuditPage } from './pages/data-exchange/ExportHistoryAuditPage';
 import { ProtectedRoute, PublicRoute } from './components/RouteGuards';
 
 export const router = createBrowserRouter([
@@ -283,6 +291,20 @@ export const router = createBrowserRouter([
             element: <ProtectedRoute requiredPermission="payments.read" />,
             children: [
               { index: true, element: <StudentPaymentsLedgerPage /> },
+            ],
+          },
+          // D08: Data Exchange (Import & Export Management)
+          {
+            path: 'data-exchange',
+            children: [
+              { index: true, element: <DataExchangeDashboardPage /> },
+              { path: 'templates', element: <TemplateCatalogPage /> },
+              { path: 'imports/new', element: <ImportUploadMappingPage /> },
+              { path: 'imports/:id/preview', element: <ImportValidationPreviewPage /> },
+              { path: 'imports/:id/review', element: <ImportDuplicateReviewPage /> },
+              { path: 'imports/:id/run', element: <ImportExecutionMonitorPage /> },
+              { path: 'exports', element: <ExportHistoryAuditPage /> },
+              { path: 'exports/new', element: <DatasetExportBuilderPage /> },
             ],
           },
           // D01: User & Role Management

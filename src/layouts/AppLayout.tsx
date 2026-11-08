@@ -25,6 +25,8 @@ import {
   Tag,
   PlayCircle,
   Percent,
+  FileSpreadsheet,
+  ArrowLeftRight,
 } from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
@@ -253,6 +255,34 @@ export const AppLayout: React.FC = () => {
                 </nav>
               </div>
             )}
+
+            <div>
+              <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                {isBn ? 'ডেটা এক্সচেঞ্জ' : 'Data Exchange'}
+              </div>
+              <nav className="space-y-1">
+                <NavLink to="/app/data-exchange" end className={navLinkClass}>
+                  <ArrowLeftRight className="w-4 h-4 text-teal-400" />
+                  <span>{isBn ? 'এক্সচেঞ্জ ড্যাশবোর্ড' : 'Overview'}</span>
+                </NavLink>
+                <NavLink to="/app/data-exchange/templates" className={navLinkClass}>
+                  <FileSpreadsheet className="w-4 h-4 text-teal-400" />
+                  <span>{isBn ? 'টেমপ্লেট ক্যাটালগ' : 'Templates'}</span>
+                </NavLink>
+                <NavLink to="/app/data-exchange/imports/new" className={navLinkClass}>
+                  <FileSpreadsheet className="w-4 h-4 text-teal-400" />
+                  <span>{isBn ? 'নতুন ইমপোর্ট' : 'New Import'}</span>
+                </NavLink>
+                <NavLink to="/app/data-exchange/exports/new" className={navLinkClass}>
+                  <FileSpreadsheet className="w-4 h-4 text-teal-400" />
+                  <span>{isBn ? 'নতুন এক্সপোর্ট' : 'New Export'}</span>
+                </NavLink>
+                <NavLink to="/app/data-exchange/exports" className={navLinkClass}>
+                  <FileSpreadsheet className="w-4 h-4 text-teal-400" />
+                  <span>{isBn ? 'এক্সপোর্ট ইতিহাস' : 'Export History'}</span>
+                </NavLink>
+              </nav>
+            </div>
 
             <div>
               <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
