@@ -21,6 +21,12 @@ import {
   UserPlus,
   TrendingUp,
   UserCheck,
+  Receipt,
+  Tag,
+  PlayCircle,
+  Percent,
+  FileSpreadsheet,
+  ArrowLeftRight,
 } from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
@@ -179,6 +185,104 @@ export const AppLayout: React.FC = () => {
                 </nav>
               </div>
             )}
+
+            {user?.permissions?.includes('billing.read') && (
+              <div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                  {isBn ? 'বিলিং ও ফি' : 'Billing & Fees'}
+                </div>
+                <nav className="space-y-1">
+                  <NavLink to="/app/billing" end className={navLinkClass}>
+                    <Receipt className="w-4 h-4 text-teal-400" />
+                    <span>{isBn ? 'বিলিং ড্যাশবোর্ড' : 'Billing Overview'}</span>
+                  </NavLink>
+                  {user?.permissions?.includes('billing.config.read') && (
+                    <NavLink to="/app/billing/categories" className={navLinkClass}>
+                      <Tag className="w-4 h-4 text-teal-400" />
+                      <span>{isBn ? 'ফি খাতসমূহ' : 'Fee Categories'}</span>
+                    </NavLink>
+                  )}
+                  {user?.permissions?.includes('billing.runs.create') && (
+                    <NavLink to="/app/billing/runs/new" className={navLinkClass}>
+                      <PlayCircle className="w-4 h-4 text-teal-400" />
+                      <span>{isBn ? 'মাসিক বিলিং রান' : 'Billing Runs'}</span>
+                    </NavLink>
+                  )}
+                  {user?.permissions?.includes('billing.adjustments.read') && (
+                    <NavLink to="/app/billing/adjustments" className={navLinkClass}>
+                      <Percent className="w-4 h-4 text-teal-400" />
+                      <span>{isBn ? 'ছাড় ও মওকুফ' : 'Waivers & Discounts'}</span>
+                    </NavLink>
+                  )}
+                </nav>
+              </div>
+            )}
+
+            {user?.permissions?.includes('payments.read') && (
+              <div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                  {isBn ? 'ক্যাশ কালেকশন ও রসিদ' : 'Cash & Receipts'}
+                </div>
+                <nav className="space-y-1">
+                  <NavLink to="/app/payments" end className={navLinkClass}>
+                    <Receipt className="w-4 h-4 text-emerald-400" />
+                    <span>{isBn ? 'ক্যাশ ড্যাশবোর্ড' : 'Cash Dashboard'}</span>
+                  </NavLink>
+                  {user?.permissions?.includes('payments.slips.create') && (
+                    <NavLink to="/app/payments/slips/new" className={navLinkClass}>
+                      <ClipboardList className="w-4 h-4 text-emerald-400" />
+                      <span>{isBn ? 'স্লিপ ইস্যু' : 'Issue Slip'}</span>
+                    </NavLink>
+                  )}
+                  {user?.permissions?.includes('payments.cashier.read') && (
+                    <NavLink to="/app/payments/cashier-shifts" className={navLinkClass}>
+                      <Building2 className="w-4 h-4 text-emerald-400" />
+                      <span>{isBn ? 'ক্যাশিয়ার শিফট' : 'Cashier Shifts'}</span>
+                    </NavLink>
+                  )}
+                  {user?.permissions?.includes('payments.reversals.read') && (
+                    <NavLink to="/app/payments/reversals" className={navLinkClass}>
+                      <ShieldAlert className="w-4 h-4 text-emerald-400" />
+                      <span>{isBn ? 'রিভার্সাল কিউ' : 'Reversals'}</span>
+                    </NavLink>
+                  )}
+                  {user?.permissions?.includes('payments.notifications.read') && (
+                    <NavLink to="/app/payments/notifications" className={navLinkClass}>
+                      <Tag className="w-4 h-4 text-emerald-400" />
+                      <span>{isBn ? 'এসএমএস আউটবক্স' : 'SMS Outbox'}</span>
+                    </NavLink>
+                  )}
+                </nav>
+              </div>
+            )}
+
+            <div>
+              <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                {isBn ? 'ডেটা এক্সচেঞ্জ' : 'Data Exchange'}
+              </div>
+              <nav className="space-y-1">
+                <NavLink to="/app/data-exchange" end className={navLinkClass}>
+                  <ArrowLeftRight className="w-4 h-4 text-teal-400" />
+                  <span>{isBn ? 'এক্সচেঞ্জ ড্যাশবোর্ড' : 'Overview'}</span>
+                </NavLink>
+                <NavLink to="/app/data-exchange/templates" className={navLinkClass}>
+                  <FileSpreadsheet className="w-4 h-4 text-teal-400" />
+                  <span>{isBn ? 'টেমপ্লেট ক্যাটালগ' : 'Templates'}</span>
+                </NavLink>
+                <NavLink to="/app/data-exchange/imports/new" className={navLinkClass}>
+                  <FileSpreadsheet className="w-4 h-4 text-teal-400" />
+                  <span>{isBn ? 'নতুন ইমপোর্ট' : 'New Import'}</span>
+                </NavLink>
+                <NavLink to="/app/data-exchange/exports/new" className={navLinkClass}>
+                  <FileSpreadsheet className="w-4 h-4 text-teal-400" />
+                  <span>{isBn ? 'নতুন এক্সপোর্ট' : 'New Export'}</span>
+                </NavLink>
+                <NavLink to="/app/data-exchange/exports" className={navLinkClass}>
+                  <FileSpreadsheet className="w-4 h-4 text-teal-400" />
+                  <span>{isBn ? 'এক্সপোর্ট ইতিহাস' : 'Export History'}</span>
+                </NavLink>
+              </nav>
+            </div>
 
             <div>
               <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">

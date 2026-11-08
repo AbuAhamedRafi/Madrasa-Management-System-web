@@ -36,6 +36,31 @@ import { IndividualPromotionPage } from './pages/promotions/IndividualPromotionP
 import { NewBulkBatchPage } from './pages/promotions/NewBulkBatchPage';
 import { BatchDetailPage } from './pages/promotions/BatchDetailPage';
 import { BatchAuditPage } from './pages/promotions/BatchAuditPage';
+import { BillingDashboardPage } from './pages/billing/BillingDashboardPage';
+import { FeeCategoriesPage } from './pages/billing/FeeCategoriesPage';
+import { FeeStructureEditorPage } from './pages/billing/FeeStructureEditorPage';
+import { BillingRunWizardPage } from './pages/billing/BillingRunWizardPage';
+import { InvoiceDetailPage } from './pages/billing/InvoiceDetailPage';
+import { InstallmentScheduleBuilderPage } from './pages/billing/InstallmentScheduleBuilderPage';
+import { WaiverApprovalQueuePage } from './pages/billing/WaiverApprovalQueuePage';
+import { StudentBillingLedgerPage } from './pages/billing/StudentBillingLedgerPage';
+import { CashCollectionDashboardPage } from './pages/payments/CashCollectionDashboardPage';
+import { PaymentSlipIssuePage } from './pages/payments/PaymentSlipIssuePage';
+import { PaymentSlipPrintPage } from './pages/payments/PaymentSlipPrintPage';
+import { CashPaymentPostPage } from './pages/payments/CashPaymentPostPage';
+import { PaymentReceiptPrintPage } from './pages/payments/PaymentReceiptPrintPage';
+import { StudentPaymentsLedgerPage } from './pages/payments/StudentPaymentsLedgerPage';
+import { CashierReconciliationPage } from './pages/payments/CashierReconciliationPage';
+import { ReversalApprovalQueuePage } from './pages/payments/ReversalApprovalQueuePage';
+import { GuardianSmsOutboxPage } from './pages/payments/GuardianSmsOutboxPage';
+import { DataExchangeDashboardPage } from './pages/data-exchange/DataExchangeDashboardPage';
+import { TemplateCatalogPage } from './pages/data-exchange/TemplateCatalogPage';
+import { ImportUploadMappingPage } from './pages/data-exchange/ImportUploadMappingPage';
+import { ImportValidationPreviewPage } from './pages/data-exchange/ImportValidationPreviewPage';
+import { ImportDuplicateReviewPage } from './pages/data-exchange/ImportDuplicateReviewPage';
+import { ImportExecutionMonitorPage } from './pages/data-exchange/ImportExecutionMonitorPage';
+import { DatasetExportBuilderPage } from './pages/data-exchange/DatasetExportBuilderPage';
+import { ExportHistoryAuditPage } from './pages/data-exchange/ExportHistoryAuditPage';
 import { ProtectedRoute, PublicRoute } from './components/RouteGuards';
 
 export const router = createBrowserRouter([
@@ -222,6 +247,64 @@ export const router = createBrowserRouter([
             element: <ProtectedRoute requiredPermission="promotions.audit.read" />,
             children: [
               { index: true, element: <BatchAuditPage /> },
+            ],
+          },
+          // D06: Fee Structures, Billing & Invoice Management Routes
+          {
+            path: 'billing',
+            element: <ProtectedRoute requiredPermission="billing.read" />,
+            children: [
+              { index: true, element: <BillingDashboardPage /> },
+              { path: 'categories', element: <FeeCategoriesPage /> },
+              { path: 'fee-structures/new', element: <FeeStructureEditorPage /> },
+              { path: 'fee-structures/:id', element: <FeeStructureEditorPage /> },
+              { path: 'runs/new', element: <BillingRunWizardPage /> },
+              { path: 'invoices/:id', element: <InvoiceDetailPage /> },
+              { path: 'invoices/:id/installments', element: <InstallmentScheduleBuilderPage /> },
+              { path: 'adjustments', element: <WaiverApprovalQueuePage /> },
+            ],
+          },
+          {
+            path: 'students/:id/billing-ledger',
+            element: <ProtectedRoute requiredPermission="billing.invoices.read" />,
+            children: [
+              { index: true, element: <StudentBillingLedgerPage /> },
+            ],
+          },
+          // D07: Cash Collection, Payment Slips & Receipts Routes
+          {
+            path: 'payments',
+            element: <ProtectedRoute requiredPermission="payments.read" />,
+            children: [
+              { index: true, element: <CashCollectionDashboardPage /> },
+              { path: 'slips/new', element: <PaymentSlipIssuePage /> },
+              { path: 'slips/:id/print', element: <PaymentSlipPrintPage /> },
+              { path: 'collect/:slipId', element: <CashPaymentPostPage /> },
+              { path: ':id/receipt', element: <PaymentReceiptPrintPage /> },
+              { path: 'cashier-shifts', element: <CashierReconciliationPage /> },
+              { path: 'reversals', element: <ReversalApprovalQueuePage /> },
+              { path: 'notifications', element: <GuardianSmsOutboxPage /> },
+            ],
+          },
+          {
+            path: 'students/:id/payments',
+            element: <ProtectedRoute requiredPermission="payments.read" />,
+            children: [
+              { index: true, element: <StudentPaymentsLedgerPage /> },
+            ],
+          },
+          // D08: Data Exchange (Import & Export Management)
+          {
+            path: 'data-exchange',
+            children: [
+              { index: true, element: <DataExchangeDashboardPage /> },
+              { path: 'templates', element: <TemplateCatalogPage /> },
+              { path: 'imports/new', element: <ImportUploadMappingPage /> },
+              { path: 'imports/:id/preview', element: <ImportValidationPreviewPage /> },
+              { path: 'imports/:id/review', element: <ImportDuplicateReviewPage /> },
+              { path: 'imports/:id/run', element: <ImportExecutionMonitorPage /> },
+              { path: 'exports', element: <ExportHistoryAuditPage /> },
+              { path: 'exports/new', element: <DatasetExportBuilderPage /> },
             ],
           },
           // D01: User & Role Management

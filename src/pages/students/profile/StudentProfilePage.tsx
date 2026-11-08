@@ -129,6 +129,13 @@ export const StudentProfilePage: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3 flex-wrap">
+          <Link
+            to={`/app/students/${student.id}/billing-ledger`}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-teal-200 bg-teal-50 text-teal-800 text-xs font-semibold hover:bg-teal-100 transition-colors shadow-2xs"
+          >
+            <span>৳ {isBn ? 'ফি খতিয়ান (Billing)' : 'Billing Ledger'}</span>
+          </Link>
+
           {canEdit && student.status !== 'ARCHIVED' && (
             <Link
               to={`/app/students/${student.id}/edit`}
